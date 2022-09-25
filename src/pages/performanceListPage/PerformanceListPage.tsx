@@ -35,7 +35,7 @@ function PerformanceListPage() {
                         <td>{pf.id}</td>
                         <td>판매중</td>
                         <td onClick={() => {
-                            window.location.href =`/performance/${pf.id}`
+                            window.location.href =`/performance/edit/${pf.id}`
                         }}>{pf.title}</td>
                         <td>{pf.startDate} ~ {pf.endDate}</td>
                         <td>{pf.createdAt.slice(0, 10)}</td>
