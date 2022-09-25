@@ -47,14 +47,14 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                 setThumbUrl(res.thumbUrl)
                 setState([{
                     startDate: moment().set({
-                        year: Number(res.startDate.split(".")[0]),
-                        month: Number(res.startDate.split(".")[1]),
-                        date: Number(res.startDate.split(".")[2]),
+                        year: Number(res.startDate.split("-")[0]),
+                        month: Number(res.startDate.split("-")[1]),
+                        date: Number(res.startDate.split("-")[2]),
                     }).toDate(),
                     endDate: moment().set({
-                        year: Number(res.endDate.split(".")[0]),
-                        month: Number(res.endDate.split(".")[1]),
-                        date: Number(res.endDate.split(".")[2]),
+                        year: Number(res.endDate.split("-")[0]),
+                        month: Number(res.endDate.split("-")[1]),
+                        date: Number(res.endDate.split("-")[2]),
                     }).toDate(),
                     key: "selection",
                 }])
