@@ -27,22 +27,10 @@ export const DetailWrapper = styled.div`
   }
 
   #title {
+    width: 500px;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
-  }
-
-  .info-left-detail{
-    display: -webkit-flex;
-    margin-bottom: 1rem;
-  }
-
-  .info-left-detail span{
-    flex: 1;
-  }
-
-  .info-left-detail div {
-    flex: 2;
   }
 
   .wrapper {

@@ -68,3 +68,16 @@ table tr {
 .rdrDateDisplayWrapper {
   display: none;
 }
+
+.info-left-detail{
+  display: -webkit-flex;
+  margin-bottom: 1rem;
+}
+
+.info-left-detail span{
+  flex: 1;
+}
+
+.info-left-detail div {
+  flex: 2;
+}

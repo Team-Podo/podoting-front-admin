@@ -6,6 +6,7 @@ interface getDetailProps {
 
 export async function getDetail({id}:getDetailProps) {
     const res = await axios.get(`https://api.podoting.com/admin/performances/${id}`)
+    console.log(res)
 
     return res.data
 }

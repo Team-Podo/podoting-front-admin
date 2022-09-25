@@ -21,7 +21,8 @@ function App() {
               <Route path={PATH.MAIN} element={<MainPage/>}/>
               <Route path={PATH.PERFORMANCES} element={<PerformanceListPage/>}/>
               <Route path={PATH.PLACES} element={<PlaceListPage/>}/>
-              <Route path={`${PATH.PLACE}:id`} element={<PlaceDetailPage/>}/>
+              <Route path={`${PATH.PLACE}:id`} element={<PlaceDetailPage type={"edit"}/>}/>
+              <Route path={`${PATH.PLACE_CREATE}`} element={<PlaceDetailPage type={"create"}/>}/>
               <Route path={`${PATH.PERFORMANCE_CREATE}`} element={<PerformanceDetailPage type={"create"}/>}/>
               <Route path={`${PATH.PERFORMANCE_EDIT}:id`} element={<PerformanceDetailPage type={"edit"}/>}/>
               <Route path={`${PATH.PERFORMANCE_CAST}:id`} element={<CastPage/>}/>

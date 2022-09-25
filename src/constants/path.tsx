@@ -2,6 +2,7 @@ export const PATH = {
     MAIN: "/",
     PLACES: "/places",
     PLACE: "/place/",
+    PLACE_CREATE: "/place/create/",
     SEAT: "/place/seats/",
     PERFORMANCES: "/performances",
     PERFORMANCE_CREATE: "/performance/create",

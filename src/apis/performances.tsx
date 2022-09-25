@@ -6,11 +6,11 @@ export async function getPerformances() {
     return res.data.performances
 }
 
-export async function createPerformance({title, place, runningTime, grade, startDate, endDate} : {
+export async function createPerformance({title, place, runningTime, rating, startDate, endDate} : {
     title: string
     place: number
     runningTime: string
-    grade: string
+    rating: string
     startDate: string
     endDate: string
 }):Promise<number> {
@@ -19,7 +19,7 @@ export async function createPerformance({title, place, runningTime, grade, start
             title,
             place,
             runningTime,
-            grade,
+            rating,
             startDate,
             endDate
         })
@@ -30,12 +30,12 @@ export async function createPerformance({title, place, runningTime, grade, start
     }
 }
 
-export async function updatePerformance({id, title, place, runningTime, grade, startDate, endDate} : {
+export async function updatePerformance({id, title, place, runningTime, rating, startDate, endDate} : {
     id: string
     title: string
     place: number
     runningTime: string
-    grade: string
+    rating: string
     startDate: string
     endDate: string
 }) {
@@ -44,7 +44,7 @@ export async function updatePerformance({id, title, place, runningTime, grade, s
             title,
             place,
             runningTime,
-            grade,
+            rating,
             startDate,
             endDate
         })

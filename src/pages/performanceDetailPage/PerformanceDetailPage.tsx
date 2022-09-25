@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useParams} from "react-router-dom";
 import {DetailWrapper} from "./PerformanceDetailPage.style";
-import {Detail} from "../../models/detail";
 import {getDetail} from "../../apis/detail";
 import Menu from "../../components/Menu/Menu";
 import {DateRange} from "react-date-range"
@@ -19,16 +18,17 @@ interface PerformanceDetailType {
 interface PerformanceFormData {
     id: string
     title: string
+    thumbUrl: string
     place: number
     runningTime: string
-    grade: string
+    rating: string
     startDate: string
     endDate: string
 }
 
 function PerformanceDetailPage({type}: PerformanceDetailType) {
     const {id} = useParams()
-    const [detail, setDetail] = useState<Detail>()
+    const [detail, setDetail] = useState<PerformanceFormData>()
     const [thumbUrl, setThumbUrl] = useState<any>()
     const [thumbFile, setThumbFile] = useState<File>()
     const {register, handleSubmit} = useForm<PerformanceFormData>()
@@ -44,6 +44,20 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
         if (type === "edit" && id) {
             getDetail({id}).then((res) => {
                 setDetail(res)
+                setThumbUrl(res.thumbUrl)
+                setState([{
+                    startDate: moment().set({
+                        year: Number(res.startDate.split(".")[0]),
+                        month: Number(res.startDate.split(".")[1]),
+                        date: Number(res.startDate.split(".")[2]),
+                    }).toDate(),
+                    endDate: moment().set({
+                        year: Number(res.endDate.split(".")[0]),
+                        month: Number(res.endDate.split(".")[1]),
+                        date: Number(res.endDate.split(".")[2]),
+                    }).toDate(),
+                    key: "selection",
+                }])
             })
         }
     }, [id, type])
@@ -69,23 +83,23 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
         if (thumbFile) {
             formData.append("thumbImg", thumbFile)
         }
-        if(data.place == 0) {
+        if (data.place == 0) {
             alert("장소를 입력해 주세요.")
         }
         data.startDate = moment(state[0].startDate).format("YYYY-MM-DD")
         data.endDate = moment(state[0].endDate).format("YYYY-MM-DD")
 
         try {
-            switch(type) {
+            switch (type) {
                 case "create":
                     const performanceId = await createPerformance(data)
-                    await uploadFiles({ performanceId, formData})
+                    await uploadFiles({performanceId, formData})
                     break;
                 case "edit":
                     if (id) {
                         data.id = id
                         await updatePerformance(data)
-                        await uploadFiles({ performanceId: Number(id), formData})
+                        await uploadFiles({performanceId: Number(id), formData})
                     }
                     break;
             }
@@ -96,53 +110,61 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
 
     return <DetailWrapper>
         <div className="info common-section">
-            <div className="wrapper">
-                <div className="info-left">
-                    <div className="poster-container">
-                        <img src={thumbUrl ? thumbUrl : emptyImg} alt="poster_image"/>
-                    </div>
-                    <form className="info-left-detail-box" onSubmit={onSubmit}>
-                        <input type={"file"} onChange={previewPoster}/>
-                        <p id="title">{detail && detail.title}</p>
-                        <div className="info-left-detail">
-                            <span>공연 일자</span>
-                            <div>
-                                <span>{`${moment(state[0].startDate).format("YYYY-MM-DD")} ~ ${moment(state[0].endDate).format("YYYY-MM-DD")}`}</span>
-                                <input type={"hidden"}
-                                       value={[moment(state[0].startDate).format("YYYY-MM-DD"), moment(state[0].endDate).format("YYYY-MM-DD")]}
-                                       readOnly={true}/>
-                                <DateRange
-                                    onChange={(item) => setState([item.selection])}
-                                    moveRangeOnFirstSelection={false}
-                                    ranges={state}
-                                    locale={ko}/>
+            { detail || type === "create" ?
+                <div className="wrapper">
+                    <div className="info-left">
+                        <div className="poster-container">
+                            <img src={thumbUrl ? thumbUrl : emptyImg} alt="poster_image"/>
+                        </div>
+                        <form className="info-left-detail-box" onSubmit={onSubmit}>
+                            <input type={"file"} onChange={previewPoster}/>
+                            <div className="info-left-detail">
+                                <input type={"text"} id="title" {...register("title")} defaultValue={detail?.title}
+                                       placeholder={"제목을 입력해 주세요"}/>
                             </div>
-                        </div>
-                        <div className="info-left-detail">
-                            <span>장소</span>
-                            <div>
-                                <select {...register("place", {required:true})}>
-                                    <option value={0}>장소를 선택해 주세요</option>
-                                    <option value={27}>고양어울림누리 어울림극장</option>
-                                </select>
+                            <div className="info-left-detail">
+                                <span>공연 일자</span>
+                                <div>
+                                    <span>{`${moment(state[0].startDate).format("YYYY-MM-DD")} ~ ${moment(state[0].endDate).format("YYYY-MM-DD")}`}</span>
+                                    <input type={"hidden"}
+                                           value={[moment(state[0].startDate).format("YYYY-MM-DD"), moment(state[0].endDate).format("YYYY-MM-DD")]}
+                                           readOnly={true}/>
+                                    <DateRange
+                                        onChange={(item) => setState([item.selection])}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={state}
+                                        locale={ko}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="info-left-detail">
-                            <span>관람시간</span>
-                            <div><input type={"text"} placeholder={"000 분"} autoComplete={"off"}
-                                {...register("runningTime")}/></div>
-                        </div>
-                        <div className="info-left-detail">
-                            <span>관람등급</span>
-                            <div><input type={"text"} placeholder={"12세 이상"} autoComplete={"off"}
-                                        {...register('grade')}/></div>
-                        </div>
-                        <button className={"button"} type={"submit"}>{type === "create" ? "생성" : "수정"}</button>
-                    </form>
+                            <div className="info-left-detail">
+                                <span>장소</span>
+                                <div>
+                                    <select {...register("place", {required: true})}>
+                                        <option value={0}>장소를 선택해 주세요</option>
+                                        <option value={27}>고양어울림누리 어울림극장</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="info-left-detail">
+                                <span>관람시간</span>
+                                <div><input type={"text"} placeholder={"000 분"} autoComplete={"off"}
+                                            defaultValue={detail?.runningTime}
+                                            {...register("runningTime")}/></div>
+                            </div>
+                            <div className="info-left-detail">
+                                <span>관람등급</span>
+                                <div><input type={"text"} placeholder={"12세 이상"} autoComplete={"off"}
+                                            defaultValue={detail?.rating}
+                                            {...register('rating')}/></div>
+                            </div>
+                            <button className={"button"} type={"submit"}>{type === "create" ? "생성" : "수정"}</button>
+                        </form>
 
+                    </div>
+                    <Menu current={"info"} id={id}/>
                 </div>
-                <Menu current={"info"} id={id}/>
-            </div>
+                : <></>
+            }
         </div>
     </DetailWrapper>
 }
