@@ -1,25 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import MainPage from "./pages/mainPage/MainPage";
+import Nav from "./components/Nav/Nav";
+import {PATH} from "./constants/path";
+import PerformanceListPage from "./pages/performanceListPage/PerformanceListPage";
+import PerformanceDetailPage from "./pages/performanceDetailPage/PerformanceDetailPage";
+import CastPage from "./pages/castPage/CastPage";
+import PerformanceSeatPage from "./pages/performanceSeatPage/PerformanceSeatPage";
+import SchedulePage from "./pages/SchedulePage/SchedulePage";
+import PlaceListPage from "./pages/placeListPage/PlaceListPage";
+import PlaceDetailPage from "./pages/placeDetailPage/PlaceDetailPage";
+import CounterContainer from "./containers/CounterContainer";
+import PerformanceContentPage from "./pages/performanceContentPage/PerformanceContentPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+          <Nav/>
+          <Routes>
+              <Route path={PATH.MAIN} element={<MainPage/>}/>
+              <Route path={PATH.PERFORMANCES} element={<PerformanceListPage/>}/>
+              <Route path={PATH.PLACES} element={<PlaceListPage/>}/>
+              <Route path={`${PATH.PLACE}:id`} element={<PlaceDetailPage/>}/>
+              <Route path={`${PATH.PERFORMANCE_CREATE}`} element={<PerformanceDetailPage type={"create"}/>}/>
+              <Route path={`${PATH.PERFORMANCE_EDIT}:id`} element={<PerformanceDetailPage type={"edit"}/>}/>
+              <Route path={`${PATH.PERFORMANCE_CAST}:id`} element={<CastPage/>}/>
+              <Route path={`${PATH.PERFORMANCE_SEAT}:id`} element={<PerformanceSeatPage/>}/>
+              <Route path={`${PATH.PERFORMANCE_SCHEDULE}:id`} element={<SchedulePage/>}/>
+              <Route path={`${PATH.PERFORMANCE_CONTENT}:id`} element={<PerformanceContentPage/>}/>
+              <Route path={"/counter"} element={<CounterContainer/>}/>
+          </Routes>
+      </BrowserRouter>
   );
 }
 

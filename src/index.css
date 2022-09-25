@@ -11,3 +11,55 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+input:focus-visible {
+  outline-color: #764abc;
+}
+
+.content-wrap {
+    width: 100%;
+    padding: 0 100px;
+}
+
+table {
+  width: 100%;
+}
+
+table tr {
+  cursor: pointer;
+}
+
+.common-section {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.row {
+  display: -webkit-flex;
+}
+
+.button {
+  float: right;
+  cursor: pointer;
+  padding: 0.6rem 2rem;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(118, 74, 188);
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
+}
