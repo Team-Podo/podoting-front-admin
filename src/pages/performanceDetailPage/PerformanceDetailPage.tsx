@@ -129,12 +129,12 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                         </div>
                         <div className="info-left-detail">
                             <span>관람시간</span>
-                            <div><input type={"text"} placeholder={"000 분"}
+                            <div><input type={"text"} placeholder={"000 분"} autoComplete={"off"}
                                 {...register("runningTime")}/></div>
                         </div>
                         <div className="info-left-detail">
                             <span>관람등급</span>
-                            <div><input type={"text"} placeholder={"12세 이상"}
+                            <div><input type={"text"} placeholder={"12세 이상"} autoComplete={"off"}
                                         {...register('grade')}/></div>
                         </div>
                         <button className={"button"} type={"submit"}>{type === "create" ? "생성" : "수정"}</button>
