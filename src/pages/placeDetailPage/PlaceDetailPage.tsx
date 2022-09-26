@@ -1,13 +1,17 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {PlaceDetailPageStyle} from "./PlaceDetailPage.style";
+import React from "react";
 
-function PlaceDetailPage() {
+interface PageType {
+    type: "create" | "edit"
+}
+
+function PlaceDetailPage({type}: PageType) {
     const {id} = useParams()
     const navigate = useNavigate()
 
     return <PlaceDetailPageStyle>
         <div className={"common-section"}>
-            place id: {id}
             <div className={"place-detail-wrapper"}>
                 <div className={"place-detail"} onClick={() => navigate("/place/seats/1")}>
                     <div>
@@ -45,7 +49,12 @@ function PlaceDetailPage() {
                         이미지 넣는곳
                     </div>
                 </div>
+
+                <div className={"place-detail"}>
+                    <div className={"add-cast-btn"}></div>
+                </div>
             </div>
+            <button className={"button"}>{type === "create" ? "생성" : "저장"}</button>
         </div>
     </PlaceDetailPageStyle>
 }

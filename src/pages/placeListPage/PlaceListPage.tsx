@@ -14,7 +14,7 @@ function PlaceListPage() {
     }, [])
 
     function onClickCreatePlace() {
-        navigate("/places/create")
+        navigate("/place/create")
     }
 
     return <>

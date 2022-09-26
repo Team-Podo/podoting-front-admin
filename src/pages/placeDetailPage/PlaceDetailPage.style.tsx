@@ -19,6 +19,35 @@ export const PlaceDetailPageStyle = styled.div`{
       }
     }
   }
-  
+
+
+  .add-cast-btn {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 50px;
+    color: #e5e5e5;
+    background-color: #fff;
+    box-shadow: inset 0 0 2px 2px #e5e5e5;
+    cursor: pointer;
+  }
+
+  .add-cast-btn:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 80px;
+    width: 80px;
+    content: "+";
+  }
+
+  .add-cast-btn:hover {
+    transition: 0.3s;
+    background-color: #e5e5e5;
+    color: #fff;
+    box-shadow: none;
+  }
   
 }`
