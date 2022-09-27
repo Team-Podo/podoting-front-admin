@@ -7,7 +7,6 @@ export const DetailWrapper = styled.div`
     -webkit-flex-direction: row;
     -webkit-align-items: center;
     -webkit-flex: 1;
-    min-width: 1120px;
   }
   
   .poster-container {
