@@ -22,11 +22,11 @@ function PerformanceListPage() {
             <table>
                 <thead>
                 <tr>
-                    <td>id</td>
-                    <td>상태</td>
-                    <td>제목</td>
-                    <td>기간</td>
-                    <td>생성일자</td>
+                    <th>id</th>
+                    <th>상태</th>
+                    <th>제목</th>
+                    <th>기간</th>
+                    <th>생성일자</th>
                 </tr>
                 </thead>
                 <tbody>

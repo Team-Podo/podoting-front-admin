@@ -19,7 +19,7 @@ interface PerformanceFormData {
     id: string
     title: string
     thumbUrl: string
-    place: number
+    placeId: number
     runningTime: string
     rating: string
     startDate: string
@@ -83,7 +83,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
         if (thumbFile) {
             formData.append("thumbImg", thumbFile)
         }
-        if (data.place == 0) {
+        if (data.placeId == 0) {
             alert("장소를 입력해 주세요.")
         }
         data.startDate = moment(state[0].startDate).format("YYYY-MM-DD")
@@ -99,7 +99,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                     if (id) {
                         data.id = id
                         await updatePerformance(data)
-                        await uploadFiles({performanceId: Number(id), formData})
+                        //await uploadFiles({performanceId: Number(id), formData})
                     }
                     break;
             }
@@ -139,7 +139,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                             <div className="info-left-detail">
                                 <span>장소</span>
                                 <div>
-                                    <select {...register("place", {required: true})}>
+                                    <select {...register("placeId", {required: true})}>
                                         <option value={0}>장소를 선택해 주세요</option>
                                         <option value={27}>고양어울림누리 어울림극장</option>
                                     </select>

@@ -6,18 +6,26 @@ export async function getPerformances() {
     return res.data.performances
 }
 
-export async function createPerformance({title, place, runningTime, rating, startDate, endDate} : {
+export async function createPerformance({title, placeId, runningTime, rating, startDate, endDate} : {
     title: string
-    place: number
+    placeId: number
     runningTime: string
     rating: string
     startDate: string
     endDate: string
 }):Promise<number> {
     try {
-        const res = await axios.post(`https://api.podoting.com/admin/performance/create`, {
+        console.log({
             title,
-            place,
+            placeId,
+            runningTime,
+            rating,
+            startDate,
+            endDate
+        })
+        const res = await axios.put(`https://api.podoting.com/admin/performances`, {
+            title,
+            placeId,
             runningTime,
             rating,
             startDate,
@@ -26,23 +34,33 @@ export async function createPerformance({title, place, runningTime, rating, star
         console.log("create performance", res)
         return res.data.performanceId
     } catch (e) {
-        throw new Error("create performance error")
+        console.log(e)
+        throw new Error()
     }
 }
 
-export async function updatePerformance({id, title, place, runningTime, rating, startDate, endDate} : {
+export async function updatePerformance({id, title, placeId, runningTime, rating, startDate, endDate} : {
     id: string
     title: string
-    place: number
+    placeId: number
     runningTime: string
     rating: string
     startDate: string
     endDate: string
 }) {
     try {
+        console.log({
+            title,
+            placeId,
+            runningTime,
+            rating,
+            startDate,
+            endDate
+        })
+        return
         const res = await axios.post(`https://api.podoting.com/admin/performance/${id}/`, {
             title,
-            place,
+            placeId,
             runningTime,
             rating,
             startDate,
