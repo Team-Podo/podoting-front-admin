@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {useParams} from "react-router-dom";
 import {DetailWrapper} from "./PerformanceDetailPage.style";
-import {getDetail} from "../../apis/detail";
+import {getDetail, PerformanceDetail} from "../../apis/detail";
 import Menu from "../../components/Menu/Menu";
 import {DateRange} from "react-date-range"
 import emptyImg from "../../assets/emptyImg.webp"
@@ -16,19 +16,6 @@ interface PerformanceDetailType {
     type: "create" | "edit"
 }
 
-interface PerformanceDetail {
-    id: string
-    title: string
-    thumbUrl: string
-    place: {
-        id: number
-        name: string
-    }
-    runningTime: string
-    rating: string
-    startDate: string
-    endDate: string
-}
 
 interface PerformanceFormData {
     id: string
@@ -75,12 +62,12 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                 setState([{
                     startDate: moment().set({
                         year: Number(res.startDate.split("-")[0]),
-                        month: Number(res.startDate.split("-")[1]),
+                        month: Number(res.startDate.split("-")[1]) -1,
                         date: Number(res.startDate.split("-")[2]),
                     }).toDate(),
                     endDate: moment().set({
                         year: Number(res.endDate.split("-")[0]),
-                        month: Number(res.endDate.split("-")[1]),
+                        month: Number(res.endDate.split("-")[1]) -1,
                         date: Number(res.endDate.split("-")[2]),
                     }).toDate(),
                     key: "selection",
