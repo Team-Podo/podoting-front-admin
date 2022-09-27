@@ -23,6 +23,7 @@ function PerformanceListPage() {
                 <thead>
                 <tr>
                     <th>id</th>
+                    <th>썸네일</th>
                     <th>상태</th>
                     <th>제목</th>
                     <th>기간</th>
@@ -33,6 +34,7 @@ function PerformanceListPage() {
                 { performances && performances.map((pf) =>
                     <tr key={pf.id}>
                         <td>{pf.id}</td>
+                        <td><img src={pf.thumbUrl}/></td>
                         <td>판매중</td>
                         <td onClick={() => {
                             window.location.href =`/performance/edit/${pf.id}`

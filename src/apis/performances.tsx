@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getPerformances() {
-    const res = await axios.get<any>(`https://api.podoting.com/admin/performances/`)
+    const res = await axios.get(`https://api.podoting.com/admin/performances/`)
 
     return res.data.performances
 }
@@ -42,9 +42,10 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
     endDate: string
 }) {
     try {
-        const res = await axios.put(`https://api.podoting.com/admin/performance/${id}/`, {
+        console.log(startDate)
+        const res = await axios.put(`https://api.podoting.com/admin/performances/${id}`, {
             title,
-            placeID,
+            "placeID": Number(placeID),
             runningTime,
             rating,
             startDate,
@@ -52,7 +53,8 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
         })
         console.log("update performance", res)
     } catch (e) {
-        throw new Error("update performance error")
+        console.log(e)
+        throw new Error()
     }
 }
 
