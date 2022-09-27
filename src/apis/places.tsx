@@ -2,9 +2,33 @@ import axios from "axios";
 import {Places} from "../models/places";
 
 export async function getPlaces() {
-    //const res = await axios.get<Places[]>(`https://api.podoting.com/admin/places/`)
+    const res = await axios.get<Places[]>(`https://api.podoting.com/admin/places/`)
+    console.log(res)
+    return res.data
+}
 
-    return [
-        { id: 1, name: "어울림누리 대극장", location: "고양시 일산 화정 어울림누리누리", createdAt: "2022-09-14"}
-    ]
+export async function getPlace(id: number) {
+    const res = await axios.get(`https://api.podoting.com/admin/places/${id}`)
+    console.log("get place", res)
+    return res.data
+}
+
+export async function createPlace(data: {name: string, location:string}) {
+    try {
+        const res = await axios.post(`https://api.podoting.com/admin/places`)
+
+        console.log(res)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function editPlace(data: {id: number, name: string, location:string}) {
+    console.log("edit 전달 데이터", data)
+    try {
+        const res = await axios.put(`https://api.podoting.com/admin/places/${data.id}`, {data})
+        console.log(res)
+    } catch (e) {
+        console.log(e)
+    }
 }

@@ -16,6 +16,7 @@ import PerformanceContentPage from "./pages/performanceContentPage/PerformanceCo
 function App() {
   return (
       <BrowserRouter>
+          <div id={"modal-root"}></div>
           <Nav/>
           <Routes>
               <Route path={PATH.MAIN} element={<MainPage/>}/>
