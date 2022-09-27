@@ -10,6 +10,7 @@ import {addDays} from "date-fns";
 import moment from "moment";
 import {useForm} from "react-hook-form";
 import {createPerformance, updatePerformance, uploadFiles} from "../../apis/performances";
+import {getPlaces} from "../../apis/places";
 
 interface PerformanceDetailType {
     type: "create" | "edit"
@@ -19,17 +20,23 @@ interface PerformanceFormData {
     id: string
     title: string
     thumbUrl: string
-    placeId: number
+    placeID: number
     runningTime: string
     rating: string
     startDate: string
     endDate: string
 }
 
+interface PlaceList {
+    id: number
+    name: string
+}
+
 function PerformanceDetailPage({type}: PerformanceDetailType) {
     const {id} = useParams()
     const [detail, setDetail] = useState<PerformanceFormData>()
     const [thumbUrl, setThumbUrl] = useState<any>()
+    const [places, setPlaces] = useState<PlaceList[]>([])
     const [thumbFile, setThumbFile] = useState<File>()
     const {register, handleSubmit} = useForm<PerformanceFormData>()
     const [state, setState] = useState<any>([
@@ -41,6 +48,13 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     ])
 
     useEffect(function () {
+        getPlaces().then((res) => {
+            const getPlaceList = res.map((r) => ({
+                id: r.id,
+                name: r.name
+            }))
+            setPlaces(getPlaceList)
+        })
         if (type === "edit" && id) {
             getDetail({id}).then((res) => {
                 setDetail(res)
@@ -81,9 +95,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     const onSubmit = handleSubmit(async data => {
         const formData = new FormData();
         if (thumbFile) {
-            formData.append("thumbImg", thumbFile)
+            formData.append("thumbnailImage", thumbFile)
         }
-        if (data.placeId == 0) {
+        if (data.placeID == 0) {
             alert("장소를 입력해 주세요.")
         }
         data.startDate = moment(state[0].startDate).format("YYYY-MM-DD")
@@ -93,7 +107,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
             switch (type) {
                 case "create":
                     const performanceId = await createPerformance(data)
-                    await uploadFiles({performanceId, formData})
+                    if(performanceId && thumbFile){
+                        await uploadFiles({performanceId, formData})
+                    }
                     break;
                 case "edit":
                     if (id) {
@@ -139,9 +155,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                             <div className="info-left-detail">
                                 <span>장소</span>
                                 <div>
-                                    <select {...register("placeId", {required: true})}>
+                                    <select {...register("placeID", {required: true})} defaultValue={detail?.placeID}>
                                         <option value={0}>장소를 선택해 주세요</option>
-                                        <option value={27}>고양어울림누리 어울림극장</option>
+                                        { places && places.map((p) => <option key={p.id} value={p.id}>{p.name}</option>) }
                                     </select>
                                 </div>
                             </div>
