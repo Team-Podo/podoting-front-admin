@@ -13,7 +13,7 @@ export async function getPlace(id: number) {
 
 export async function createPlace(data: {name: string, address:string}) {
     try {
-        const res = await axios.post(`https://api.podoting.com/admin/places/`, {"name": data.name})
+        const res = await axios.post(`https://api.podoting.com/admin/places/`, data)
 
     } catch (e) {
         console.log(e)
@@ -23,7 +23,7 @@ export async function createPlace(data: {name: string, address:string}) {
 export async function editPlace(data: {id: number, name: string, address:string}) {
     console.log("edit 전달 데이터", data)
     try {
-        const res = await axios.put(`https://api.podoting.com/admin/places/${data.id}`, {"name": data.name})
+        const res = await axios.put(`https://api.podoting.com/admin/places/${data.id}`, {"name": data.name, "address": data.address})
         console.log(res)
     } catch (e) {
         console.log(e)
