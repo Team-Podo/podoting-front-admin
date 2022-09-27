@@ -16,10 +16,23 @@ interface PerformanceDetailType {
     type: "create" | "edit"
 }
 
-interface PerformanceFormData {
+interface PerformanceDetail {
     id: string
     title: string
     thumbUrl: string
+    place: {
+        id: number
+        name: string
+    }
+    runningTime: string
+    rating: string
+    startDate: string
+    endDate: string
+}
+
+interface PerformanceFormData {
+    id: string
+    title: string
     placeID: number
     runningTime: string
     rating: string
@@ -34,7 +47,7 @@ interface PlaceList {
 
 function PerformanceDetailPage({type}: PerformanceDetailType) {
     const {id} = useParams()
-    const [detail, setDetail] = useState<PerformanceFormData>()
+    const [detail, setDetail] = useState<PerformanceDetail>()
     const [thumbUrl, setThumbUrl] = useState<any>()
     const [places, setPlaces] = useState<PlaceList[]>([])
     const [thumbFile, setThumbFile] = useState<File>()
@@ -155,7 +168,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                             <div className="info-left-detail">
                                 <span>장소</span>
                                 <div>
-                                    <select {...register("placeID", {required: true})} defaultValue={detail?.placeID}>
+                                    <select {...register("placeID", {required: true})} defaultValue={detail?.place.id}>
                                         <option value={0}>장소를 선택해 주세요</option>
                                         { places && places.map((p) => <option key={p.id} value={p.id}>{p.name}</option>) }
                                     </select>
