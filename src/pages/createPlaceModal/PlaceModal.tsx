@@ -5,7 +5,7 @@ import {createPlace, editPlace, getPlace, getPlaces} from "../../apis/places";
 interface PlaceFormProps {
     id: number
     name: string
-    location: string
+    address: string
 }
 
 interface PlaceModalProps {
@@ -52,7 +52,7 @@ function PlaceModal({handleClose, type, id}:PlaceModalProps) {
                 </div>
                 <div className={"form-column"}>
                     <span>주소</span>
-                    <input type={"text"} placeholder={"주소를 입력해 주세요"} autoComplete={"off"} {...register("location")} defaultValue={data?.location}/>
+                    <input type={"text"} placeholder={"주소를 입력해 주세요"} autoComplete={"off"} {...register("address")} defaultValue={data?.address}/>
                 </div>
                 <button className={"button"} type={"submit"}>{type==="edit" ? "수정" : "생성"}</button>
                 <div className={"modal-close"} onClick={closePortal}>X</div>

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Places} from "../../models/places";
 import {getPlaces} from "../../apis/places";
-import {useNavigate} from "react-router-dom";
 import ModalPortal from "../../components/ModalPortal";
 import PlaceModal from "../createPlaceModal/PlaceModal";
 
@@ -54,7 +53,7 @@ function PlaceListPage() {
                         <td onClick={() => {
                             window.location.href = `/place/${pl.id}`
                         }}>{pl.name}</td>
-                        <td>{pl.location}</td>
+                        <td>{pl.address}</td>
                         <td>{pl.createdAt.slice(0, 10)}</td>
                         <td>
                             <button onClick={openPlaceModal} value={pl.id} className={"btn-small"}>수정</button>

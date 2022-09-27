@@ -1,6 +1,6 @@
 export interface Places {
     id: number
     name: string
-    location: string
+    address: string
     createdAt: string
 }
