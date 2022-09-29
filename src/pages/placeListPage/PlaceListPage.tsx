@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Places} from "../../models/places";
 import {getPlaces} from "../../apis/places";
 import ModalPortal from "../../components/ModalPortal";
-import PlaceModal from "../createPlaceModal/PlaceModal";
-
+import PlaceModal from "../../components/createPlaceModal/PlaceModal";
 function PlaceListPage() {
     const [places, setPlaces] = useState<Places[]>()
     const [modal, setModal] = useState({ state: false, type: "create"})
     const [placeId, setPlaceId] = useState(0)
+
 
     useEffect(function () {
         getPlaces().then((res) => {

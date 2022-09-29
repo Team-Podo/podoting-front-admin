@@ -42,7 +42,6 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
     endDate: string
 }) {
     try {
-        console.log(startDate)
         const res = await axios.put(`https://api.podoting.com/admin/performances/${id}`, {
             title,
             "placeID": Number(placeID),
@@ -51,7 +50,7 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
             startDate,
             endDate
         })
-        console.log("update performance", res)
+        return res
     } catch (e) {
         console.log(e)
         throw new Error()

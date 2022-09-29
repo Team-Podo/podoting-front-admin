@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {DetailWrapper} from "./PerformanceDetailPage.style";
 import {getDetail, PerformanceDetail} from "../../apis/detail";
@@ -11,6 +11,9 @@ import moment from "moment";
 import {useForm} from "react-hook-form";
 import {createPerformance, updatePerformance, uploadFiles} from "../../apis/performances";
 import {getPlaces} from "../../apis/places";
+import ModalPortal from "../../components/ModalPortal";
+import AlertModal from "../../components/alertModal/AlertModal";
+import {AlertProps} from "../../models/alert";
 
 interface PerformanceDetailType {
     type: "create" | "edit"
@@ -38,6 +41,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     const [thumbUrl, setThumbUrl] = useState<any>()
     const [places, setPlaces] = useState<PlaceList[]>([])
     const [thumbFile, setThumbFile] = useState<File>()
+    const [alert, setAlert] = useState<AlertProps>({ display: false, message: ""})
     const {register, handleSubmit} = useForm<PerformanceFormData>()
     const [state, setState] = useState<any>([
         {
@@ -46,6 +50,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
             key: "selection",
         },
     ])
+    function setAlertProps(display:boolean, message:string) {
+        setAlert({"display": display, "message": message})
+    }
 
     useEffect(function () {
         getPlaces().then((res) => {
@@ -98,7 +105,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
             formData.append("thumbnailImage", thumbFile)
         }
         if (data.placeID == 0) {
-            alert("장소를 입력해 주세요.")
+            setAlertProps(true, "장소를 입력해 주세요")
         }
         data.startDate = moment(state[0].startDate).format("YYYY-MM-DD")
         data.endDate = moment(state[0].endDate).format("YYYY-MM-DD")
@@ -114,8 +121,13 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                 case "edit":
                     if (id) {
                         data.id = id
-                        await updatePerformance(data)
+                        const res = await updatePerformance(data)
                         //await uploadFiles({performanceId: Number(id), formData})
+                        if (res.status === 200) {
+                            setAlertProps(true, "수정되었습니다.")
+                        } else {
+                            setAlertProps(true, "수정에 실패하였습니다!")
+                        }
                     }
                     break;
             }
@@ -135,7 +147,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                         <form className="info-left-detail-box" onSubmit={onSubmit}>
                             <input type={"file"} onChange={previewPoster}/>
                             <div className="info-left-detail">
-                                <input type={"text"} id="title" {...register("title")} defaultValue={detail?.title}
+                                <input type={"text"} id="title" {...register("title")} defaultValue={detail?.title} required={true}
                                        placeholder={"제목을 입력해 주세요"}/>
                             </div>
                             <div className="info-left-detail">
@@ -181,6 +193,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                 </div>
                 : <></>
             }
+            <ModalPortal>
+                <AlertModal setDisplay={setAlertProps} display={alert.display} message={alert.message}/>
+            </ModalPortal>
         </div>
     </DetailWrapper>
 }

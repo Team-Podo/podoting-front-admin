@@ -134,14 +134,14 @@ table tr td {
   justify-content: center;
   align-items: center;
   background-color: rgba(0,0,0,0.3);
+  z-index: 1001;
 }
 
 .modal {
   position: relative;
   opacity: 1;
-  z-index: 100;
+  z-index: 1002;
   min-width: 300px;
-  min-height: 200px;
   background-color: #fff;
   padding: 2rem;
 }
@@ -161,4 +161,21 @@ table tr td {
   display: -webkit-flex;
   flex-direction: column;
   margin-bottom: 1rem;
+}
+
+.alert {
+  text-align: center;
+  border-radius: 10px;
+}
+
+.alert-confirm {
+  color: #764abc;
+  background-color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.alert-confirm:hover {
+  cursor: pointer;
 }

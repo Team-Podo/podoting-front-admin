@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {createPlace, editPlace, getPlace, getPlaces} from "../../apis/places";
+import {createPlace, editPlace, getPlace} from "../../apis/places";
+import ModalPortal from "../ModalPortal";
+import AlertModal from "../alertModal/AlertModal";
+import {AlertProps} from "../../models/alert";
 
 interface PlaceFormProps {
     id: number
@@ -17,15 +20,27 @@ interface PlaceModalProps {
 function PlaceModal({handleClose, type, id}:PlaceModalProps) {
     const {register, handleSubmit, reset} = useForm<PlaceFormProps>()
     const [data, setData] = useState<PlaceFormProps>()
+    const [alert, setAlert] = useState<AlertProps>({ display: false, message: ""})
+    function setAlertProps(display:boolean, message:string) {
+        setAlert({"display": display, "message": message})
+    }
 
     const onSubmit = handleSubmit(async data => {
+        let res;
         try {
             switch (type) {
-                case "create": await createPlace(data)
+                case "create":
+                    res = await createPlace(data)
+                    console.log(res)
+                    res && res.status === 201 ? setAlertProps(true, "장소가 생성되었습니다.") : setAlertProps(true, "장소 생성 도중 오류가 발생하였습니다.")
                     break;
-                case "edit": await editPlace(data)
+                case "edit":
+                    res = await editPlace(data)
+                    console.log(res)
+                    res && res.status === 200 ? setAlertProps(true, "장소가 수정되었습니다.") : setAlertProps(true, "장소 수정 도중 오류가 발생하였습니다.")
                     break;
             }
+
 
         } catch (e) {
             console.log(e)
@@ -36,7 +51,7 @@ function PlaceModal({handleClose, type, id}:PlaceModalProps) {
         if (type === "edit" && id) {
             getPlace(id).then((res) => { setData(res); reset(res) })
         }
-    }, [])
+    })
 
     function closePortal(e: React.MouseEvent) {
         handleClose(false)
@@ -57,6 +72,9 @@ function PlaceModal({handleClose, type, id}:PlaceModalProps) {
                 <button className={"button"} type={"submit"}>{type==="edit" ? "수정" : "생성"}</button>
                 <div className={"modal-close"} onClick={closePortal}>X</div>
             </form>
+            <ModalPortal>
+                <AlertModal setDisplay={setAlertProps} display={alert.display} message={alert.message}/>
+            </ModalPortal>
         </div>
     )
 }
