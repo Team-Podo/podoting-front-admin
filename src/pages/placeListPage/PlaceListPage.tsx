@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {Places} from "../../models/places";
-import {getPlaces} from "../../apis/places";
+import {deletePlace, getPlaces} from "../../apis/places";
 import ModalPortal from "../../components/ModalPortal";
 import PlaceModal from "../../components/createPlaceModal/PlaceModal";
+import useAlarm from "../../hooks/useAlarm";
+
 function PlaceListPage() {
     const [places, setPlaces] = useState<Places[]>()
     const [modal, setModal] = useState({ state: false, type: "create"})
     const [placeId, setPlaceId] = useState(0)
-
+    const setAlarm = useAlarm()
 
     useEffect(function () {
+        getPlaceList()
+    }, [])
+
+    function getPlaceList() {
         getPlaces().then((res) => {
             setPlaces(res)
         })
-    }, [])
+    }
 
     function openPlaceModal(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault()
@@ -25,8 +31,13 @@ function PlaceListPage() {
         }
     }
 
-    function deletePlaceModal(e: React.MouseEvent<HTMLButtonElement>) {
+    async function deletePlaceModal(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault()
+        const res = await deletePlace(e.currentTarget.value)
+        if(res.status === 200) {
+            setAlarm("장소가 삭제되었습니다")
+        }
+        getPlaceList()
     }
 
     function closePlaceModal() {

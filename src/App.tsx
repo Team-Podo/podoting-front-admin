@@ -10,13 +10,14 @@ import PerformanceSeatPage from "./pages/performanceSeatPage/PerformanceSeatPage
 import SchedulePage from "./pages/SchedulePage/SchedulePage";
 import PlaceListPage from "./pages/placeListPage/PlaceListPage";
 import PlaceDetailPage from "./pages/placeDetailPage/PlaceDetailPage";
-import CounterContainer from "./containers/CounterContainer";
 import PerformanceContentPage from "./pages/performanceContentPage/PerformanceContentPage";
+import AlarmContainer from "./containers/AlarmContainer";
 
 function App() {
   return (
       <BrowserRouter>
           <div id={"modal-root"}></div>
+          <AlarmContainer/>
           <Nav/>
           <Routes>
               <Route path={PATH.MAIN} element={<MainPage/>}/>
@@ -30,7 +31,6 @@ function App() {
               <Route path={`${PATH.PERFORMANCE_SEAT}:id`} element={<PerformanceSeatPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SCHEDULE}:id`} element={<SchedulePage/>}/>
               <Route path={`${PATH.PERFORMANCE_CONTENT}:id`} element={<PerformanceContentPage/>}/>
-              <Route path={"/counter"} element={<CounterContainer/>}/>
           </Routes>
       </BrowserRouter>
   );
