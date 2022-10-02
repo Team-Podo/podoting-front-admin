@@ -10,8 +10,9 @@ function Nav () {
             <div className={"nav-left"}>
                 <img className={"logo"} src={logoSrc} onClick={() => navigation("/")}/>
                 <ul>
-                    <li onClick={() => navigation("/performances")}>상품</li>
-                    <li onClick={() => navigation("/places")}>장소</li>
+                    <li onClick={() => navigation("/performances")} className={window.location.pathname === "/performances" ? "active" : ""}>상품</li>
+                    <li onClick={() => navigation("/places")} className={window.location.pathname === "/places" ? "active" : ""}>장소</li>
+                    <li onClick={() => navigation("/people")} className={window.location.pathname === "/people" ? "active" : ""}>배우</li>
                 </ul>
             </div>
             <div className={"profile"}>

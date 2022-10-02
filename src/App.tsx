@@ -13,6 +13,7 @@ import PlaceDetailPage from "./pages/placeDetailPage/PlaceDetailPage";
 import PerformanceContentPage from "./pages/performanceContentPage/PerformanceContentPage";
 import AlarmContainer from "./containers/AlarmContainer";
 import AreaPage from "./pages/areaPage/AreaPage";
+import PeoplePage from "./pages/peoplePage/PeoplePage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path={PATH.MAIN} element={<MainPage/>}/>
               <Route path={PATH.PERFORMANCES} element={<PerformanceListPage/>}/>
               <Route path={PATH.PLACES} element={<PlaceListPage/>}/>
+              <Route path={PATH.PEOPLE} element={<PeoplePage/>}/>
               <Route path={`${PATH.PLACE_AREAS}:id`} element={<PlaceDetailPage/>}/>
               <Route path={`${PATH.PLACE_AREAS}:placeId/create`} element={<AreaPage type={"new"}/>}/>
               <Route path={`${PATH.PLACE_AREAS}:placeId/:areaId`} element={<AreaPage type={"edit"}/>}/>
