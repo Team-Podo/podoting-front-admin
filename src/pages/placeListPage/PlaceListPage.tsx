@@ -62,7 +62,7 @@ function PlaceListPage() {
                     <tr key={pl.id}>
                         <td>{pl.id}</td>
                         <td onClick={() => {
-                            window.location.href = `/place/${pl.id}`
+                            window.location.href = `/place/areas/${pl.id}`
                         }}>{pl.name}</td>
                         <td>{pl.address}</td>
                         <td>{pl.createdAt.slice(0, 10)}</td>
