@@ -31,7 +31,7 @@ function App() {
               <Route path={`${PATH.PLACE_AREAS}:placeId/:areaId`} element={<AreaPage type={"edit"}/>}/>
               <Route path={`${PATH.PERFORMANCE_CREATE}`} element={<PerformanceDetailPage type={"create"}/>}/>
               <Route path={`${PATH.PERFORMANCE_EDIT}:id`} element={<PerformanceDetailPage type={"edit"}/>}/>
-              <Route path={`${PATH.PERFORMANCE_CAST}:id`} element={<CastPage/>}/>
+              <Route path={`${PATH.PERFORMANCE_CAST}:performanceID`} element={<CastPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SEAT}:id`} element={<PerformanceSeatPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SCHEDULE}:id`} element={<SchedulePage/>}/>
               <Route path={`${PATH.PERFORMANCE_CONTENT}:id`} element={<PerformanceContentPage/>}/>

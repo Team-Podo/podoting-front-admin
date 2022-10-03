@@ -179,3 +179,11 @@ table tr td {
 .alert-confirm:hover {
   cursor: pointer;
 }
+
+.remove-li {
+  background-color: #e6e6e6;
+  border: 1px solid #764abc;
+  border-radius: 3px;
+  padding: 1px 2px;
+  font-size: 0.9rem;
+}
