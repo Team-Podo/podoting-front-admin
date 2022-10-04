@@ -65,6 +65,11 @@ table tr td {
   padding: 1rem 1.5rem;
 }
 
+.flex-row {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+}
+
 .common-section {
   margin: 0 auto;
   width: 1280px;
@@ -181,6 +186,7 @@ table tr td {
 }
 
 .remove-li {
+  cursor: pointer;
   background-color: #e6e6e6;
   border: 1px solid #764abc;
   border-radius: 3px;
