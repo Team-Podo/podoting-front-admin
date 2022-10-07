@@ -1,6 +1,12 @@
 export interface Cast {
     id?: number
-    name: string
-    role: string
-    profile: string
+    personID: string
+    characterID: string
+    profileImage: string
+}
+
+export interface CastList {
+    id: number
+    characterName: string
+    personName: string
 }
