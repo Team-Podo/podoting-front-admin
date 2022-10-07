@@ -50,15 +50,17 @@ function SchedulePage() {
         const today = moment(date).format("YYYY-MM-DD")
         let className = ""
 
-        schedules.filter((s) => {
-            if (s.date === today) {
-                if (!s.open) {
-                    className = "closed"
-                } else if (s.open) {
-                    className = "scheduled"
+        if( schedules && schedules.length>0) {
+            schedules.filter((s) => {
+                if (s.date === today) {
+                    if (!s.open) {
+                        className = "closed"
+                    } else if (s.open) {
+                        className = "scheduled"
+                    }
                 }
-            }
-        })
+            })
+        }
         return className
     }
 
@@ -91,11 +93,14 @@ function SchedulePage() {
                             onChange={setActiveDate}
                             tileClassName={({date}) => checkStatus(date)}/>
                         <div className={"flex-row"}>
-                            <ScheduleForm performanceID={performanceID!} activeDate={activeDate} castList={castList} characterList={characterList} refresh={refreshSchedules}/>
+                            <ScheduleForm performanceID={performanceID!} activeDate={activeDate} castList={castList}
+                                          characterList={characterList} refresh={refreshSchedules}/>
                             <div>
-                                {findSchedule(activeDate).map((sch) =>
-                                    <ScheduleForm performanceID={performanceID!} activeDate={activeDate} schedule={sch} key={sch.uuid}
-                                                  castList={castList} characterList={characterList} refresh={refreshSchedules}/>
+                                { ( schedules && schedules.length > 0 ) && findSchedule(activeDate).map((sch) =>
+                                    <ScheduleForm performanceID={performanceID!} activeDate={activeDate} schedule={sch}
+                                                  key={sch.uuid}
+                                                  castList={castList} characterList={characterList}
+                                                  refresh={refreshSchedules}/>
                                 )}
                             </div>
                         </div>
