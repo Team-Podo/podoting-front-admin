@@ -71,6 +71,11 @@ table tr td {
   align-items: baseline;
 }
 
+.flex-column {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+}
+
 .common-section {
   margin: 0 auto;
   width: 1280px;

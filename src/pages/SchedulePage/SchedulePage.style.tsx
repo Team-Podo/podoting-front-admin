@@ -7,7 +7,12 @@ export const SchedulePageStyle = styled.div`{
     margin-right: 2rem;
   }
   
+  .cast-list {
+    font-size: 0.9rem;
+  }
+  
   .cast-list ul{
+    position: relative;
     display: inline-block;
     text-align: center;
     margin: 0;
@@ -19,7 +24,8 @@ export const SchedulePageStyle = styled.div`{
   }
   
   .cast-list div {
-    background-color: #764abc;
+    background-color: rgba(118, 74, 188, 0.7);
+    font-weight: 600;
   }
   
   .actor-list li{
