@@ -1,89 +1,37 @@
 import {DetailWrapper} from "../performanceDetailPage/PerformanceDetailPage.style";
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Menu from "../../components/Menu/Menu";
 import {SeatPageStyle} from "./SeatPage.style";
 import sampleSeatSrc from "../../assets/sampleseat.gif"
 import SeatItem from "../../components/SeatItem/SeatItem";
-
-
-interface Seat {
-    id: number,
-    color: string
-    grade: string
-    point?: {
-        x: number
-        y: number
-    }
-}
-
-interface Grade {
-    id: string,
-    name: string,
-    color: string
-}
+import {getSeats, saveSeats} from "../../apis/seats";
+import {Grade, Seat} from "../../models/seat";
+import {getGrades} from "../../apis/grades";
 
 function PerformanceSeatPage() {
-    const {id} = useParams()
-    const navigate = useNavigate()
-    const [place, setPlace] = useState("")
+    const {performanceID} = useParams()
+    const areaID = 26;
     const [seats, setSeats] = useState<Seat[]>([])
-    const [activeSeat, setActiveSeat] = useState<Seat>({ id:0, color:"", grade:""})
+    const [activeSeat, setActiveSeat] = useState<{uuid:string, grade:Grade}>({
+        grade: {id: 0, price: 0, color: "", name: ""},
+        uuid: ""
+    })
     const [grades, setGrades] = useState<Grade[]>([])
 
     useEffect(function () {
-        const sampleGrades = [{
-            id: "idVIP",
-            name: "VIP",
-            color: "#764abc"
-        }, {
-            id: "idR",
-            name: "R",
-            color: "blue"
-        }]
-        setGrades(sampleGrades)
-        const sampleSeats = [{
-            id: 1,
-            color: "",
-            grade: "",
-            point: {
-                x: 217,
-                y: 201
-            }
-        },{
-            id: 2,
-            color: "",
-            grade: "",
-            point: {
-                x: 233,
-                y: 201
-            }
-        },{
-            id: 3,
-            color: "",
-            grade: "",
-            point: {
-                x: 265,
-                y: 201
-            }
-        },{
-            id: 4,
-            color: "",
-            grade: "",
-            point: {
-                x: 281,
-                y: 201
-            }
-        }]
-
-        setSeats(sampleSeats)
-    }, [])
+        if(performanceID) {
+            getSeats({performanceID, areaID: areaID}).then((res) => {
+                setSeats(res)
+            })
+            getGrades({performanceID}).then((res) => setGrades(res.data))
+        }
+    }, [performanceID])
 
     useEffect(function () {
-        if(activeSeat.id !== 0) {
+        if (activeSeat.uuid !== "") {
             setSeats([...seats.map((s) => {
-                if (s.id === activeSeat.id) {
-                    s.color = activeSeat.color
+                if (s.uuid === activeSeat.uuid) {
                     s.grade = activeSeat.grade
                 }
                 return s
@@ -94,38 +42,36 @@ function PerformanceSeatPage() {
 
     function onChangeGrade(e: React.ChangeEvent<HTMLInputElement>) {
         if (activeSeat) {
+            const grade = grades.find((g) => g.id === Number(e.currentTarget.value))
             setActiveSeat({
-                id: activeSeat.id,
-                color: grades.filter((g) => g.id === e.currentTarget.value)[0].color,
-                grade: e.currentTarget.value
+                uuid: activeSeat.uuid,
+                grade: grade!
             })
         }
     }
 
-    function storeActiveSeat(e: React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault()
-        if (activeSeat) {
-
-        }
-    }
-
     function onClickSubmitBoard() {
+        const seatArray = seats.map((s) => {
+            return {
+                uuid: s.uuid,
+                gradeID: s.grade.id
+            }
+        })
+        if ( performanceID && areaID) { saveSeats({performanceID, areaID, seatArray}).then((res) => {
+            if(res.status === 200) {
 
+            }
+        }) }
     }
 
-    function onClickGetPoint(e: React.MouseEvent) {
-        const point = {
-            x: e.clientX,
-            y: e.clientY
-        }
-        console.log(point)
+    function onClickGetPoint(e: React.MouseEvent<HTMLImageElement>) {
     }
 
-    function setActiveSeatHandler(id:number, color:string, grade:string) {
-        if(seats?.filter((s) => s.id == id)[0]) {
-            setActiveSeat(seats?.filter((s) => s.id == id)[0])
+    function setActiveSeatHandler(uuid: string, grade: Grade) {
+        if (seats?.filter((s) => s.uuid === uuid)[0]) {
+            setActiveSeat(seats?.filter((s) => s.uuid === uuid)[0])
         } else {
-            setActiveSeat({id:0, color:"", grade:""})
+            setActiveSeat({uuid: uuid, grade: grade})
         }
     }
 
@@ -135,34 +81,37 @@ function PerformanceSeatPage() {
                 <div className="info-left">
                     <SeatPageStyle>
                         <div className={"seat-map-image"}>
-                            <img src={sampleSeatSrc} onClick={onClickGetPoint}/>
-                            {activeSeat?.id !== 0 &&
+                            <img src={sampleSeatSrc} alt={"좌석표"} onClick={onClickGetPoint}/>
+                            {activeSeat?.uuid !== "" &&
                             <form className={"seat-map-canvas"}>
                                 <div>
-                                    <label htmlFor={"id"}>선택된 좌석</label>
-                                    <input name={"id"} readOnly={true} value={activeSeat?.id}/>
+                                    <p>선택된 좌석: {activeSeat?.uuid}</p>
                                 </div>
                                 <div>
                                     {grades && grades.map((g) => <div key={g.id}>
                                         <label htmlFor={"grade"}>{g.name}</label>
                                         <input type={"checkbox"} name={"grade"} value={g.id}
-                                               checked={g.id === activeSeat?.grade} onChange={onChangeGrade}/>
+                                               checked={g.id === activeSeat?.grade.id} onChange={onChangeGrade}/>
                                     </div>)}
                                 </div>
                             </form>
                             }
                             <button className="submit-seat" onClick={onClickSubmitBoard}>저장</button>
-                            { seats && seats.map((s) => s.point && <SeatItem key={s.id} id={s.id} color={s.color} point={s.point} grade={s.grade} onClick={setActiveSeatHandler} active={activeSeat?.id===s.id}></SeatItem>)}
+                            {seats && seats.map((s) =>
+                                <SeatItem key={s.uuid} uuid={s.uuid} grade={s.grade} point={s.point}
+                                          onClick={setActiveSeatHandler}
+                                          active={activeSeat?.uuid === s.uuid}></SeatItem>)}
                         </div>
-                        <ul>
-                            { seats && seats.map((s) => <li key={s.id}>
-                                {`id:${s.id}, name:1층 1열 n번, grade:${s.grade}`}
-                            </li>) }
-                        </ul>
+                        {/*
+                            <ul>
+                                {seats && seats.map((s) => <li key={s.uuid}>
+                                    {`id:${s.uuid}`}
+                                </li>)}
+                            </ul>
+                        */}
                     </SeatPageStyle>
-
                 </div>
-                <Menu current={"seat"} id={id}/>
+                <Menu current={"seat"} performanceID={performanceID!}/>
             </div>
         </div>
     </DetailWrapper>

@@ -6,11 +6,11 @@ export const PATH = {
     PLACE_AREAS_CREATE: "/place/areas/create",
     SEAT: "/place/seats/",
     PERFORMANCES: "/performances",
+    PERFORMANCE: "/performance/",
     PEOPLE: "/people",
     PERFORMANCE_CREATE: "/performance/create",
     PERFORMANCE_EDIT: "/performance/edit/",
     PERFORMANCE_CAST: "/performance/cast/",
-    PERFORMANCE_SEAT: "/performance/seat/",
     PERFORMANCE_SCHEDULE: "/performance/schedule/",
     PERFORMANCE_CONTENT: "/performance/content/",
 }

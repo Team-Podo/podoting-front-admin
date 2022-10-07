@@ -1,27 +1,20 @@
 import {SeatItemStyle} from "./SeatItem.style";
-import {useState} from "react";
+import {Grade, Seat} from "../../models/seat";
 
-interface Seat {
-    id: number,
-    color: string
-    point: {
-        x: number
-        y: number
-    }
-    grade: string
-    onClick: (id:number, color:string, grade:string) => void
+interface SeatProps extends Seat {
+    onClick: (uuid:string, grade:Grade) => void
     active: boolean
 }
 
-function SeatItem({id, color, point, grade, onClick, active}:Seat) {
+function SeatItem({uuid, grade, point, onClick, active}:SeatProps) {
     function setActiveSeat() {
         if(active){
-            onClick(0, "", "")
+            onClick("", {id: 0, color:"", price:0, name:""})
         }else{
-            onClick(id, color, grade)
+            onClick(uuid, grade)
         }
     }
-    return <SeatItemStyle color={color} className={`seat${active? " active" : ""}${grade? "" : " unset"}`} point={point} onClick={setActiveSeat}>
+    return <SeatItemStyle color={grade.color} className={`seat${active? " active" : ""}${grade? "" : " unset"}`} point={point} onClick={setActiveSeat}>
     </SeatItemStyle>
 }
 

@@ -184,7 +184,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                         </form>
 
                     </div>
-                    <Menu current={"info"} id={id}/>
+                    <Menu current={"info"} performanceID={id!}/>
                 </div>
                 : <></>
             }

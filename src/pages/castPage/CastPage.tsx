@@ -162,7 +162,7 @@ function CastPage() {
                             <button type={"submit"} onClick={onSubmit} className={"button"}>저장</button>
                         </div>
                     </div>
-                    <Menu current={"cast"} id={performanceID}/>
+                    <Menu current={"cast"} performanceID={performanceID!}/>
                 </div>
             </div>
         </DetailWrapper>

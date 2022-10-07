@@ -106,7 +106,7 @@ function SchedulePage() {
                         </div>
                     </SchedulePageStyle>
                 </div>
-                <Menu current={"schedule"} id={performanceID}/>
+                <Menu current={"schedule"} performanceID={performanceID!}/>
             </div>
         </div>
     </DetailWrapper>
