@@ -68,6 +68,7 @@ table tr td {
 .flex-row {
   display: -webkit-flex;
   -webkit-flex-direction: row;
+  align-items: baseline;
 }
 
 .common-section {

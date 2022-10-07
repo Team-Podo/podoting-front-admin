@@ -1,54 +1,107 @@
 import {DetailWrapper} from "../performanceDetailPage/PerformanceDetailPage.style";
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Menu from "../../components/Menu/Menu";
 import "../../calendar.css"
 import {Calendar} from "react-calendar";
 import moment from "moment";
+import {SchedulePageStyle} from "./SchedulePage.style";
+import {getSchedules} from "../../apis/schedule";
+import {CastList} from "../../models/cast";
+import ScheduleForm from "../../components/scheduleForm/ScheduleForm";
+import {Schedule} from "../../models/schedule";
+import {getCharacters} from "../../apis/characters";
 
-interface scheduledDate {
-    date: string,
-    schedule: string
-}
 
 function SchedulePage() {
-    const {id} = useParams()
-    const navigate = useNavigate()
-    const [opened, setOpened] = useState<scheduledDate[]>([])
+    const {performanceID} = useParams()
+    const [schedules, setSchedules] = useState<Schedule[]>([])
     const [activeDate, setActiveDate] = useState(new Date())
+    const [period, setPeriod] = useState({startDate: "2022-10-01", endDate: "2029-12-31"})
+    const [castList, setCastList] = useState<CastList[]>([])
+    const [characterList, setCharacterList] = useState([""])
 
     useEffect(function () {
-        const sampleSchedules = [{
-            date: "2022-09-28",
-            schedule: ""
-        },{
-            date: "2022-09-30",
-            schedule: ""
-        }]
-        setOpened(sampleSchedules)
-    }, [])
+        refreshSchedules()
+    }, [performanceID])
+
+    function refreshSchedules() {
+        if (performanceID) {
+            getSchedules({performanceID}).then((res) => {
+                setPeriod({startDate: res.performance.startDate, endDate: res.performance.endDate})
+                setCastList(res.casts)
+                setSchedules(res.schedules)
+                setActiveDate(new Date(res.performance.startDate))
+            })
+            getCharacters({performanceID}).then((res) => {
+                const names = res.data.map((ch) => {
+                    return ch.name
+                })
+                setCharacterList(names)
+            })
+        }
+    }
+
+    useEffect(() => {
+        setSchedules(schedules)
+    }, [activeDate])
+
+    function checkStatus(date: Date) {
+        const today = moment(date).format("YYYY-MM-DD")
+        let className = ""
+
+        schedules.filter((s) => {
+            if (s.date === today) {
+                if (!s.open) {
+                    className = "closed"
+                } else if (s.open) {
+                    className = "scheduled"
+                }
+            }
+        })
+        return className
+    }
+
+    function checkPeriod(date: Date) {
+        const today = moment(date).format("YYYY-MM-DD")
+        if (today >= period.startDate && today <= period.endDate) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    function findSchedule(date: Date) {
+        const today = moment(activeDate).format("YYYY-MM-DD")
+        const sch = schedules.filter((schs) => {
+            if (schs.date === moment(activeDate).format("YYYY-MM-DD")) return schs
+        })
+        return sch
+    }
 
     return <DetailWrapper>
         <div className="info common-section">
             <div className="wrapper">
                 <div className="info-left">
-                    <Calendar
-                        calendarType={"US"}
-                        value={activeDate}
-                        onChange={setActiveDate}
-                        tileClassName={({date}) => {
-                        if (opened.find((o) => o.date == moment(date).format("YYYY-MM-DD"))) {
-                            console.log(moment(date).format("YYYY-MM-DD"))
-                            return "scheduled"
-                        } else { console.log(moment(date).format("YYYY-MM-DD")); return "noo"}
-                    }}/>
-                    <div className={"schedule-edit"}>
-                        <div>날짜: {moment(activeDate).format("YYYY-MM-DD")}</div>
-                        <div>시간: </div>
-                        <div>캐스팅: <input type={"text"} placeholder={"캐스팅을 입력해주세요"}/></div>
-                    </div>
+                    <SchedulePageStyle>
+                        <Calendar
+                            tileDisabled={({date}) => checkPeriod(date)}
+                            calendarType={"US"}
+                            value={activeDate}
+                            onChange={setActiveDate}
+                            tileClassName={({date}) => checkStatus(date)}/>
+                        <div className={"flex-row"}>
+                            <ScheduleForm performanceID={performanceID!} activeDate={activeDate} castList={castList} characterList={characterList} refresh={refreshSchedules}/>
+                            <div>
+                                {findSchedule(activeDate).map((sch) =>
+                                    <ScheduleForm performanceID={performanceID!} activeDate={activeDate} schedule={sch} key={sch.uuid}
+                                                  castList={castList} characterList={characterList} refresh={refreshSchedules}/>
+                                )}
+                            </div>
+                        </div>
+                    </SchedulePageStyle>
                 </div>
-                <Menu current={"schedule"} id={id}/>
+                <Menu current={"schedule"} id={performanceID}/>
             </div>
         </div>
     </DetailWrapper>

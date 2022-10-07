@@ -33,7 +33,7 @@ function App() {
               <Route path={`${PATH.PERFORMANCE_EDIT}:id`} element={<PerformanceDetailPage type={"edit"}/>}/>
               <Route path={`${PATH.PERFORMANCE_CAST}:performanceID`} element={<CastPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SEAT}:id`} element={<PerformanceSeatPage/>}/>
-              <Route path={`${PATH.PERFORMANCE_SCHEDULE}:id`} element={<SchedulePage/>}/>
+              <Route path={`${PATH.PERFORMANCE_SCHEDULE}:performanceID`} element={<SchedulePage/>}/>
               <Route path={`${PATH.PERFORMANCE_CONTENT}:id`} element={<PerformanceContentPage/>}/>
           </Routes>
       </BrowserRouter>
