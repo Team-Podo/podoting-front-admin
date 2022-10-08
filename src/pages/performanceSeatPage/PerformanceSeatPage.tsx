@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Menu from "../../components/Menu/Menu";
 import {SeatPageStyle} from "./SeatPage.style";
-import sampleSeatSrc from "../../assets/sampleseat.gif"
 import SeatItem from "../../components/SeatItem/SeatItem";
 import {getSeats, saveSeats} from "../../apis/seats";
 import {Grade, Seat} from "../../models/seat";
@@ -18,13 +17,18 @@ function PerformanceSeatPage() {
         uuid: ""
     })
     const [grades, setGrades] = useState<Grade[]>([])
+    const [bgImg, setBgImg] = useState("")
 
     useEffect(function () {
         if(performanceID) {
             getSeats({performanceID, areaID: areaID}).then((res) => {
-                setSeats(res)
+                setSeats(res.seats)
+                setBgImg(res.backgroundImage)
             })
             getGrades({performanceID}).then((res) => setGrades(res.data))
+        }
+        for(let i=0; i<100; i++) {
+
         }
     }, [performanceID])
 
@@ -81,7 +85,7 @@ function PerformanceSeatPage() {
                 <div className="info-left">
                     <SeatPageStyle>
                         <div className={"seat-map-image"}>
-                            <img src={sampleSeatSrc} alt={"좌석표"} onClick={onClickGetPoint}/>
+                            <img src={bgImg} alt={"좌석표"} onClick={onClickGetPoint}/>
                             {activeSeat?.uuid !== "" &&
                             <form className={"seat-map-canvas"}>
                                 <div>
