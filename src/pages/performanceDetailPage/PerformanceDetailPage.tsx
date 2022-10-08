@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {DetailWrapper} from "./PerformanceDetailPage.style";
 import {getDetail, PerformanceDetail} from "../../apis/detail";
 import Menu from "../../components/Menu/Menu";
@@ -9,7 +9,7 @@ import {ko} from 'date-fns/esm/locale';
 import {addDays} from "date-fns";
 import moment from "moment";
 import {useForm} from "react-hook-form";
-import {createPerformance, updatePerformance, uploadFiles} from "../../apis/performances";
+import {createPerformance, deletePerformance, updatePerformance, uploadFiles} from "../../apis/performances";
 import {getPlaces} from "../../apis/places";
 import useAlarm from "../../hooks/useAlarm";
 
@@ -41,6 +41,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     const setAlarm = useAlarm()
     const [thumbFile, setThumbFile] = useState<File>()
     const {register, handleSubmit} = useForm<PerformanceFormData>()
+    const navigate = useNavigate()
     const [state, setState] = useState<any>([
         {
             startDate: new Date(),
@@ -131,6 +132,16 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
         }
     })
 
+    function onClickDeletePerformance(e:React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault()
+        id && deletePerformance({performanceID: id}).then((res) => {
+            if(res===200) {
+                setAlarm("삭제되었습니다")
+                navigate("/performances")
+            }
+        })
+    }
+
     return <DetailWrapper>
         <div className="info common-section">
             { detail || type === "create" ?
@@ -181,6 +192,10 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
                                             {...register('rating')}/></div>
                             </div>
                             <button className={"button"} type={"submit"}>{type === "create" ? "생성" : "수정"}</button>
+                            { type === "edit" &&
+                                <button className={"button"}
+                                        onClick={onClickDeletePerformance}>삭제</button>
+                            }
                         </form>
 
                     </div>

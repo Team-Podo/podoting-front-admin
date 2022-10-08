@@ -72,3 +72,9 @@ export async function uploadFiles({performanceId, formData}: {
         console.log(e)
     }
 }
+
+export async function deletePerformance({performanceID} : {performanceID:string}) {
+    const res = await axios.delete(`https://api.podoting.com/admin/performances/${performanceID}`)
+
+    return res.status
+}
