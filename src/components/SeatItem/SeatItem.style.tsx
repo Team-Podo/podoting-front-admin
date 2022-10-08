@@ -5,8 +5,8 @@ export const SeatItemStyle = styled.div<{color: string, point: {x:number, y:numb
   top: ${props => props.point.y}px;
   left: ${props => props.point.x}px;
   position: absolute;
-  width: 11px;
-  height: 11px;
+  width: 8px;
+  height: 8px;
   font-size: 3px;
   
   &.active {

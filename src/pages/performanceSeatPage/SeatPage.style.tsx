@@ -13,7 +13,6 @@ export const SeatPageStyle = styled.div`{
     position: relative;
   
     &>img {
-      width: 1000px;
       -webkit-user-drag: none;
     }
     
