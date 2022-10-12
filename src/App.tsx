@@ -34,7 +34,7 @@ function App() {
               <Route path={`${PATH.PERFORMANCE_CAST}:performanceID`} element={<CastPage/>}/>
               <Route path={`${PATH.PERFORMANCE}:performanceID/area/`} element={<PerformanceSeatPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SCHEDULE}:performanceID`} element={<SchedulePage/>}/>
-              <Route path={`${PATH.PERFORMANCE_CONTENT}:id`} element={<PerformanceContentPage/>}/>
+              <Route path={`${PATH.PERFORMANCE_CONTENT}:performanceID`} element={<PerformanceContentPage/>}/>
           </Routes>
       </BrowserRouter>
   );
