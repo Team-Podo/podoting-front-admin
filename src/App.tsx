@@ -14,6 +14,7 @@ import PerformanceContentPage from "./pages/performanceContentPage/PerformanceCo
 import AlarmContainer from "./containers/AlarmContainer";
 import AreaPage from "./pages/areaPage/AreaPage";
 import PeoplePage from "./pages/peoplePage/PeoplePage";
+import PageNotFound from "./pages/pageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route path={`${PATH.PERFORMANCE}:performanceID/area/`} element={<PerformanceSeatPage/>}/>
               <Route path={`${PATH.PERFORMANCE_SCHEDULE}:performanceID`} element={<SchedulePage/>}/>
               <Route path={`${PATH.PERFORMANCE_CONTENT}:performanceID`} element={<PerformanceContentPage/>}/>
+              <Route path={"*"} element={<PageNotFound/>}/>
           </Routes>
       </BrowserRouter>
   );
