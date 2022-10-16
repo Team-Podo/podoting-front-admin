@@ -1,9 +1,15 @@
 import {MainPageStyle} from "./MainPage.style";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function MainPage() {
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        navigate("/performances")
+    })
 
     function handleIdChange(e: React.ChangeEvent<HTMLInputElement>) {
         setId(e.target.value)
@@ -19,19 +25,23 @@ function MainPage() {
     }
 
     return <MainPageStyle>
-        <div className="login-box">
-            <form name="login-form" onSubmit={handleLoginForm}>
-                <div className={"input-wrapper"}>
-                    <label>ID</label>
-                    <input type={"text"} name={"id"} onChange={handleIdChange} value={id} autoComplete={"off"} required/>
-                </div>
-                <div className={"input-wrapper"}>
-                    <label>Password</label>
-                    <input type={"text"} name={"password"} onChange={handlePasswordChange} value={password} autoComplete={"off"} required/>
-                </div>
-                <button type={"submit"} className={"button"}>제출</button>
-            </form>
-        </div>
+        {/*
+            <div className="login-box">
+                <form name="login-form" onSubmit={handleLoginForm}>
+                    <div className={"input-wrapper"}>
+                        <label>ID</label>
+                        <input type={"text"} name={"id"} onChange={handleIdChange} value={id} autoComplete={"off"}
+                               required/>
+                    </div>
+                    <div className={"input-wrapper"}>
+                        <label>Password</label>
+                        <input type={"text"} name={"password"} onChange={handlePasswordChange} value={password}
+                               autoComplete={"off"} required/>
+                    </div>
+                    <button type={"submit"} className={"button"}>제출</button>
+                </form>
+            </div>*/
+        }
     </MainPageStyle>
 }
 
