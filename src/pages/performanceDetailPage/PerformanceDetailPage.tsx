@@ -12,6 +12,7 @@ import {useForm} from "react-hook-form";
 import {createPerformance, deletePerformance, updatePerformance, uploadFiles} from "../../apis/performances";
 import {getPlaces} from "../../apis/places";
 import useAlarm from "../../hooks/useAlarm";
+import {useConfirm} from "../../hooks/useConfirm";
 
 interface PerformanceDetailType {
     type: "create" | "edit"
@@ -39,6 +40,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     const [thumbUrl, setThumbUrl] = useState<any>()
     const [places, setPlaces] = useState<PlaceList[]>([])
     const setAlarm = useAlarm()
+    const setConfirm = useConfirm()
     const [thumbFile, setThumbFile] = useState<File>()
     const {register, handleSubmit} = useForm<PerformanceFormData>()
     const navigate = useNavigate()
@@ -110,8 +112,9 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
             switch (type) {
                 case "create":
                     const performanceId = await createPerformance(data)
-                    if(performanceId && thumbFile){
-                        await uploadFiles({performanceId, formData})
+                    if(performanceId){
+                        if(thumbFile) await uploadFiles({performanceId, formData})
+                        setAlarm("생성되었습니다.")
                     }
                     break;
                 case "edit":
@@ -134,11 +137,13 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
 
     function onClickDeletePerformance(e:React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault()
-        id && deletePerformance({performanceID: id}).then((res) => {
-            if(res===200) {
-                setAlarm("삭제되었습니다")
-                navigate("/performances")
-            }
+        setConfirm("정말로 삭제하시겠습니까?", () => {
+            id && deletePerformance({performanceID: id}).then((res) => {
+                if(res===200) {
+                    setAlarm("삭제되었습니다")
+                    navigate("/performances")
+                }
+            })
         })
     }
 

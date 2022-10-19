@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import alarm from "./alarm";
+import confirm from "./confirm";
 
 const rootReducer = combineReducers({
-    alarm
+    alarm,
+    confirm
 });
 
 export default rootReducer;

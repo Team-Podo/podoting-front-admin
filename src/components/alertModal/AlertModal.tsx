@@ -1,13 +1,14 @@
 import {AlertProps} from "../../models/alert";
+import {AlertModalStyle} from "./AlertModalStyle";
 
-function AlertModal({setDisplay, display, message}: AlertProps) {
+function AlertModal({msg, display, onClick}: { msg: string, display: boolean, onClick: (state:boolean)=>void }) {
 
-    return display ? <div className={"modal-container"}>
+    return display ? <AlertModalStyle>
         <div className={"modal alert"}>
-            <p>{message}</p>
-            <button className={"alert-confirm"} onClick={() => setDisplay && setDisplay(false, "")}>확인</button>
+            <p>{msg}</p>
+            <button className={"alert-confirm"} onClick={() => onClick(false)}>확인</button>
         </div>
-    </div> : null
+    </AlertModalStyle> : null
 }
 
 export default AlertModal
