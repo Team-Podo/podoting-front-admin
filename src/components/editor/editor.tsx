@@ -3,6 +3,7 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css'
 import {Editor} from '@toast-ui/react-editor'
 import {useEffect, useRef, useState} from 'react'
 import {editContent, getContent, saveContent, uploadImage} from "../../apis/content";
+import useAlarm from "../../hooks/useAlarm";
 
 const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
     const [content, setContent] = useState("")
@@ -11,6 +12,7 @@ const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
     const [contentID, setContentID] = useState<string>()
     const editorRef = useRef<Editor>(null);
     const toolbarItems = [['heading', 'bold', 'italic', 'strike'], ['hr'], ['table', 'link'], ['image'], ['scrollSync'],]
+    const setAlarm = useAlarm()
 
     useEffect(() => {
         refreshContent()
@@ -18,7 +20,7 @@ const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
 
     function refreshContent() {
         getContent({performanceID}).then((res) => {
-            if (res.data.contents.length < 1) {
+            if (!res.data.contents) {
                 setType("new")
             } else {
                 setType("edit");
@@ -34,9 +36,17 @@ const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
             const managingTitle = "컨텐츠"
 
             if(type === "new") {
-                performanceID && saveContent({performanceID, content, managingTitle})
+                performanceID && saveContent({performanceID, content, managingTitle}).then((res) => {
+                    if(res.status === 201) {
+                        setAlarm("컨텐츠가 생성되었습니다.")
+                    }
+                })
             } else if(type === "edit" && contentID) {
-                performanceID && editContent({performanceID, contentID, content, managingTitle})
+                performanceID && editContent({performanceID, contentID, content, managingTitle}).then((res) => {
+                    if(res.status === 200) {
+                        setAlarm("컨텐츠가 수정되었습니다.")
+                    }
+                })
             }
         }
     }

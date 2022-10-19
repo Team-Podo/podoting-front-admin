@@ -25,7 +25,8 @@ export async function editContent({
                                   }: { performanceID: string, contentID:string, content: string, managingTitle: string }) {
     const res = await axios.put(`https://api.podoting.com/admin/performances/${Number(performanceID)}/contents/${contentID}`, {
         content,
-        managingTitle
+        managingTitle,
+        visible:true
     })
     return res
 }
