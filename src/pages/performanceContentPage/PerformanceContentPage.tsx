@@ -4,7 +4,7 @@ import {DetailWrapper} from "../performanceDetailPage/PerformanceDetailPage.styl
 import {useParams} from "react-router-dom";
 import '@toast-ui/editor/dist/toastui-editor.css';
 import WysiwygEditor from "../../components/editor/editor";
-import Menu from "../../components/Menu/Menu";
+import Menu from "../../components/menu/Menu";
 
 function PerformanceContentPage() {
     const { performanceID } = useParams()

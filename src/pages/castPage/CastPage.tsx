@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {DetailWrapper} from "../performanceDetailPage/PerformanceDetailPage.style";
 import React, {useEffect, useState} from "react";
-import Menu from "../../components/Menu/Menu";
+import Menu from "../../components/menu/Menu";
 import {Cast} from "../../models/cast";
 import {createCharacter, deleteCharacter, getCharacters} from "../../apis/characters";
 import useAlarm from "../../hooks/useAlarm";

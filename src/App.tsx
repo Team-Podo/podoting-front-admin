@@ -1,13 +1,13 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainPage from "./pages/mainPage/MainPage";
-import Nav from "./components/Nav/Nav";
+import Nav from "./components/nav/Nav";
 import {PATH} from "./constants/path";
 import PerformanceListPage from "./pages/performanceListPage/PerformanceListPage";
 import PerformanceDetailPage from "./pages/performanceDetailPage/PerformanceDetailPage";
 import CastPage from "./pages/castPage/CastPage";
 import PerformanceSeatPage from "./pages/performanceSeatPage/PerformanceSeatPage";
-import SchedulePage from "./pages/SchedulePage/SchedulePage";
+import SchedulePage from "./pages/schedulePage/SchedulePage";
 import PlaceListPage from "./pages/placeListPage/PlaceListPage";
 import PlaceDetailPage from "./pages/placeDetailPage/PlaceDetailPage";
 import PerformanceContentPage from "./pages/performanceContentPage/PerformanceContentPage";

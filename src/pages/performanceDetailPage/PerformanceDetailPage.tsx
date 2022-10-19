@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {DetailWrapper} from "./PerformanceDetailPage.style";
 import {getDetail, PerformanceDetail} from "../../apis/detail";
-import Menu from "../../components/Menu/Menu";
+import Menu from "../../components/menu/Menu";
 import {DateRange} from "react-date-range"
 import emptyImg from "../../assets/emptyImg.webp"
 import {ko} from 'date-fns/esm/locale';

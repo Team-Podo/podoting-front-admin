@@ -1,9 +1,9 @@
 import {DetailWrapper} from "../performanceDetailPage/PerformanceDetailPage.style";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import Menu from "../../components/Menu/Menu";
+import Menu from "../../components/menu/Menu";
 import {SeatPageStyle} from "./SeatPage.style";
-import SeatItem from "../../components/SeatItem/SeatItem";
+import SeatItem from "../../components/seatItem/SeatItem";
 import {getSeats, saveSeats} from "../../apis/seats";
 import {Grade, Seat} from "../../models/seat";
 import {createGrade, getGrades} from "../../apis/grades";
@@ -12,27 +12,26 @@ import useAlarm from "../../hooks/useAlarm";
 
 function PerformanceSeatPage() {
     const {performanceID} = useParams()
+    const [loaded, setLoaded] = useState(false)
     const areaID = 26;
     const [seats, setSeats] = useState<Seat[]>([])
-    const [activeSeat, setActiveSeat] = useState<{uuid:string, grade:Grade}>({
+    const [activeSeat, setActiveSeat] = useState<{ uuid: string, grade: Grade }>({
         grade: {id: 0, price: 0, color: "", name: ""},
         uuid: ""
     })
     const [grades, setGrades] = useState<Grade[]>([])
     const [bgImg, setBgImg] = useState("")
     const setAlarm = useAlarm()
-    const { register, handleSubmit } = useForm<Grade>()
+    const {register, handleSubmit} = useForm<Grade>()
 
     useEffect(function () {
-        if(performanceID) {
+        if (performanceID) {
             getSeats({performanceID, areaID: areaID}).then((res) => {
                 setSeats(res.seats)
                 setBgImg(res.backgroundImage)
+                setLoaded(true)
             })
             getGrades({performanceID}).then((res) => setGrades(res.data))
-        }
-        for(let i=0; i<100; i++) {
-
         }
     }, [performanceID])
 
@@ -65,14 +64,13 @@ function PerformanceSeatPage() {
                 gradeID: s.grade.id!
             }
         })
-        if ( performanceID && areaID) { saveSeats({performanceID, areaID, seatArray}).then((res) => {
-            if(res.status === 200) {
+        if (performanceID && areaID) {
+            saveSeats({performanceID, areaID, seatArray}).then((res) => {
+                if (res.status === 200) {
 
-            }
-        }) }
-    }
-
-    function onClickGetPoint(e: React.MouseEvent<HTMLImageElement>) {
+                }
+            })
+        }
     }
 
     function setActiveSeatHandler(uuid: string, grade: Grade) {
@@ -90,12 +88,13 @@ function PerformanceSeatPage() {
     }))
 
     return <DetailWrapper>
+        {loaded &&
         <div className="info common-section">
             <div className="wrapper">
                 <div className="info-left">
                     <SeatPageStyle>
                         <div className={"seat-map-image"}>
-                            <img src={bgImg} alt={"좌석표"} onClick={onClickGetPoint}/>
+                            <img src={bgImg} alt={"좌석표"}/>
                             {activeSeat?.uuid !== "" &&
                             <form className={"seat-map-canvas"}>
                                 <div>
@@ -137,6 +136,7 @@ function PerformanceSeatPage() {
                 <Menu current={"seat"} performanceID={performanceID!}/>
             </div>
         </div>
+        }
     </DetailWrapper>
 }
 
