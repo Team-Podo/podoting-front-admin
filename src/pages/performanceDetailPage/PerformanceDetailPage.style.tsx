@@ -72,6 +72,12 @@ export const DetailWrapper = styled.div`
     }
   }
 
+  .add-cast-form > div {
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+  }
 
   .add-cast-btn {
     width: 80px;
@@ -102,5 +108,15 @@ export const DetailWrapper = styled.div`
     box-shadow: none;
   }
 
+  .cast-profile {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50px;
+    
+    & > img {
+      width: 100%;
+    }
+  }
 
 `

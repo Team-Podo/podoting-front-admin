@@ -2,7 +2,7 @@ export interface Cast {
     id?: number
     personID: string
     characterID: string
-    profileImage: string
+    profileImage: any
 }
 
 export interface CastList {
