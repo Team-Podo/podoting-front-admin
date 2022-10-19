@@ -1,10 +1,7 @@
 import styled from "styled-components";
 
 export const SeatPageStyle = styled.div`{
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
   height: 600px;
-  justify-content: space-between;
   
   & .seat-map-image {
     overflow: scroll;

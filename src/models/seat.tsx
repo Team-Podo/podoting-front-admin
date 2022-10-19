@@ -1,6 +1,6 @@
 export interface Grade {
     color: string
-    id: number
+    id?: number
     name: string
     price: number
 }

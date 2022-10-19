@@ -6,7 +6,9 @@ import {SeatPageStyle} from "./SeatPage.style";
 import SeatItem from "../../components/SeatItem/SeatItem";
 import {getSeats, saveSeats} from "../../apis/seats";
 import {Grade, Seat} from "../../models/seat";
-import {getGrades} from "../../apis/grades";
+import {createGrade, getGrades} from "../../apis/grades";
+import {useForm} from "react-hook-form";
+import useAlarm from "../../hooks/useAlarm";
 
 function PerformanceSeatPage() {
     const {performanceID} = useParams()
@@ -18,6 +20,8 @@ function PerformanceSeatPage() {
     })
     const [grades, setGrades] = useState<Grade[]>([])
     const [bgImg, setBgImg] = useState("")
+    const setAlarm = useAlarm()
+    const { register, handleSubmit } = useForm<Grade>()
 
     useEffect(function () {
         if(performanceID) {
@@ -58,7 +62,7 @@ function PerformanceSeatPage() {
         const seatArray = seats.map((s) => {
             return {
                 uuid: s.uuid,
-                gradeID: s.grade.id
+                gradeID: s.grade.id!
             }
         })
         if ( performanceID && areaID) { saveSeats({performanceID, areaID, seatArray}).then((res) => {
@@ -78,6 +82,12 @@ function PerformanceSeatPage() {
             setActiveSeat({uuid: uuid, grade: grade})
         }
     }
+
+    const onSubmit = handleSubmit((async data => {
+        performanceID && createGrade({performanceID, data}).then((res) => {
+            setAlarm("가격 정보가 생성되었습니다.")
+        })
+    }))
 
     return <DetailWrapper>
         <div className="info common-section">
@@ -106,13 +116,22 @@ function PerformanceSeatPage() {
                                           onClick={setActiveSeatHandler}
                                           active={activeSeat?.uuid === s.uuid}></SeatItem>)}
                         </div>
-                        {/*
-                            <ul>
-                                {seats && seats.map((s) => <li key={s.uuid}>
-                                    {`id:${s.uuid}`}
-                                </li>)}
-                            </ul>
-                        */}
+                        <form className={"grade-form"} onSubmit={onSubmit}>
+                            <p>가격 등급 생성하기</p>
+                            <div className={"input-wrapper"}>
+                                <label>등급 이름: </label>
+                                <input type={"text"} {...register("name")} placeholder={"VIP"} required={true}/>
+                            </div>
+                            <div className={"input-wrapper"}>
+                                <label>등급 가격: </label>
+                                <input type={"number"} {...register("price")} placeholder={"150000"} required={true}/>
+                            </div>
+                            <div className={"input-wrapper"}>
+                                <label>등급 색상: </label>
+                                <input type={"text"} {...register("color")} placeholder={"#e5e5e5"} required={true}/>
+                            </div>
+                            <button type={"submit"}>생성</button>
+                        </form>
                     </SeatPageStyle>
                 </div>
                 <Menu current={"seat"} performanceID={performanceID!}/>
