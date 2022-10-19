@@ -15,7 +15,6 @@ export async function createPerformance({title, placeID, runningTime, rating, st
     endDate: string
 }):Promise<number> {
     try {
-        console.log(placeID)
         const res = await axios.post(`https://api.podoting.com/admin/performances/`, {
             title,
             "placeID": Number(placeID),
@@ -42,6 +41,7 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
     endDate: string
 }) {
     try {
+        console.log({id, title, placeID, runningTime, rating, startDate, endDate})
         const res = await axios.put(`https://api.podoting.com/admin/performances/${id}`, {
             title,
             "placeID": Number(placeID),
@@ -50,6 +50,7 @@ export async function updatePerformance({id, title, placeID, runningTime, rating
             startDate,
             endDate
         })
+        console.log(res)
         return res
     } catch (e) {
         console.log(e)
