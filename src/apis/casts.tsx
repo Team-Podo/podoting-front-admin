@@ -8,7 +8,7 @@ export async function getCasts({performanceID}: { performanceID: string }) {
 
 export async function saveCasts({performanceID, casts}: { performanceID: string, casts: Cast[] }) {
     const data = casts.map((c) => {
-        if (c.personID && c.personID) {
+        if (c.personID && c.characterID) {
             if (c.id) {
                 return {
                     id: c.id,
