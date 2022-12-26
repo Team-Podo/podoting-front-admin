@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const NavStyle = styled.nav`{
-  width: 100%;
+  width: 1280px;
   height: 80px;
   display: -webkit-flex;
-  align-items: center;
-  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  -webkit-flex-direction: row;
+  margin: 0 auto;
   
   .nav-left {
     flex: 1;

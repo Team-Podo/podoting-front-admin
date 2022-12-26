@@ -1,31 +1,26 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 * {
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  list-style: none;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
 }
 
 input:focus-visible {
-  outline-color: #764abc;
-}
-
-input, select {
-  padding: 3px;
-  width: 200px;
+    outline-color: #764abc;
 }
 
 .content-wrap {
@@ -34,168 +29,204 @@ input, select {
 }
 
 table {
-  text-align: center;
-  box-shadow: 0 5px 7px 4px #e6e6e6;
-  width: 100%;
-  box-sizing: border-box;
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-  overflow: hidden;
+    text-align: center;
+    box-shadow: 0 5px 7px 4px #e6e6e6;
+    width: 100%;
+    box-sizing: border-box;
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 table thead {
-  border-radius: 10px;
+    border-radius: 10px;
 }
 
-table thead tr th{
-  background-color: #d9c3de;
-  padding: 1rem;
+table thead tr th {
+    background-color: #d9c3de;
+    padding: 1rem;
 }
 
 table tbody tr:nth-child(even) {
-  background-color: #FAF7FF;
+    background-color: #FAF7FF;
 }
 
 table th {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 table tr td {
-  padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem;
 }
 
 .flex-row {
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
-  align-items: baseline;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    align-items: baseline;
 }
 
 .flex-column {
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
 }
 
 .common-section {
-  margin: 0 auto;
-  width: 1280px;
-  padding: 0 150px;
+    padding: 3rem 6rem;
+    margin: 0 auto;
+    width: 1280px;
 }
 
 .row {
-  display: -webkit-flex;
+    display: -webkit-flex;
 }
 
 .button {
-  float: right;
-  cursor: pointer;
-  padding: 0.6rem 2rem;
-  border: 2px solid rgb(255, 255, 255);
-  background-color: rgb(118, 74, 188);
-  border-radius: 10px;
-  color: rgb(255, 255, 255);
-  font-weight: bold;
+    cursor: pointer;
+    padding: 0.6rem 2rem;
+    border: 2px solid transparent;
+    background-color: rgb(118, 74, 188);
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin: 0 5px;
 }
 
 .btn-small {
-  cursor: pointer;
-  padding: 0.3rem 0.7rem;
-  border: 2px solid #764abc;
-  border-radius: 10px;
-  color: #000;
-  font-weight: bold;
-  margin: 0 5px;
+    cursor: pointer;
+    padding: 0.3rem 0.7rem;
+    border: 2px solid #764abc;
+    border-radius: 10px;
+    color: #000;
+    font-weight: bold;
+    margin: 0 5px;
 }
 
 .btn-small:hover {
-  color: #000;
-  border: 2px solid #764abc;
-  background-color: #d9c3de;
+    color: #000;
+    border: 2px solid #764abc;
+    background-color: #d9c3de;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 .rdrDateDisplayWrapper {
-  display: none;
+    display: none;
 }
 
-.info-left-detail{
-  display: -webkit-flex;
-  margin-bottom: 1rem;
+.info-left-detail {
+    display: -webkit-flex;
+    margin-bottom: 1rem;
 }
 
-.info-left-detail span{
-  flex: 1;
+.info-left-detail span {
+    flex: 1;
 }
 
 .info-left-detail div {
-  flex: 2;
+    flex: 2;
 }
 
 .modal-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: -webkit-flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,0.3);
-  z-index: 1001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1001;
 }
 
 .modal {
-  position: relative;
-  opacity: 1;
-  z-index: 1002;
-  min-width: 300px;
-  background-color: #fff;
-  padding: 2rem;
+    position: relative;
+    opacity: 1;
+    z-index: 1002;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 2rem;
 }
 
 .modal-close {
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.3rem;
-  color: #764abc;
-  padding: 10px;
-  position: absolute;
-  top: 0;
-  right: 0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #764abc;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .form-column {
-  display: -webkit-flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+    display: -webkit-flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-column input {
+    margin-top: 1rem;
 }
 
 .alert {
-  text-align: center;
-  border-radius: 10px;
+    text-align: center;
+    border-radius: 10px;
 }
 
 .alert-confirm {
-  color: #764abc;
-  background-color: #fff;
-  border: none;
-  font-weight: bold;
-  font-size: 1.1rem;
+    color: #764abc;
+    background-color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .alert-confirm:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.remove-li {
-  cursor: pointer;
-  background-color: #e6e6e6;
-  border: 1px solid #764abc;
-  border-radius: 3px;
-  padding: 1px 2px;
-  font-size: 0.9rem;
+.btn-tiny {
+    cursor: pointer;
+    background-color: #F6F6F6;
+    border: 1px solid #764abc;
+    border-radius: 3px;
+    padding: 3px 5px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.margin-top-2 {
+    margin-top: 2rem;
+}
+
+.margin-bottom-2 {
+    margin-bottom: 2rem;
+}
+
+input[type="text"],input[type="time"], input[type="number"], input[type="date"], select {
+    border-radius: 5px;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid lightgray;
+    min-width: 180px;
+}
+
+.input-wrapper {
+    margin-bottom: 1rem;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+}
+
+.input-wrapper>label {
+    margin-right: 10px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #764abc;
 }

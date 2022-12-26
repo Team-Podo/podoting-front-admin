@@ -148,7 +148,7 @@ function PerformanceDetailPage({type}: PerformanceDetailType) {
     }
 
     return <DetailWrapper>
-        <div className="info common-section">
+        <div className="common-section">
             { detail || type === "create" ?
                 <div className="wrapper">
                     <div className="info-left">

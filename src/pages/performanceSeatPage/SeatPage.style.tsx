@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
 export const SeatPageStyle = styled.div`{
-  height: 600px;
-  
   & .seat-map-image {
     overflow: scroll;
     width: 800px;
-    background-color: grey;
     position: relative;
   
     &>img {
@@ -17,20 +14,19 @@ export const SeatPageStyle = styled.div`{
       position: absolute;
       display: -webkit-flex;
       -webkit-flex-direction: column;
-      -webkit-align-items: center;
-      background-color: cyan;
+      -webkit-align-items: baseline;
       min-width: 300px;
+      top: 1rem;
+      left: 1rem;
       -webkit-user-select:none;
       -moz-user-select:none;
       -ms-user-select:none;
       user-select:none;
-      top: 0;
-      left: 0;
       
       & div {
         display: -webkit-flex;
-        flex-direction: row;
-        justify-content: space-between;
+        -webkit-flex-direction: row;
+        -webkit-justify-content: space-between;
       }
       
       & .block {

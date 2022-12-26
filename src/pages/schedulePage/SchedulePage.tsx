@@ -82,9 +82,8 @@ function SchedulePage() {
     }
 
     return <DetailWrapper>
-        <div className="info common-section">
+        <div className="common-section">
             <div className="wrapper">
-                <div className="info-left">
                     <SchedulePageStyle>
                         <Calendar
                             tileDisabled={({date}) => checkPeriod(date)}
@@ -92,7 +91,7 @@ function SchedulePage() {
                             value={activeDate}
                             onChange={setActiveDate}
                             tileClassName={({date}) => checkStatus(date)}/>
-                        <div className={"flex-row"}>
+                        <div className={"flex-row schedule-edit-box"}>
                             <ScheduleForm performanceID={performanceID!} activeDate={activeDate} castList={castList}
                                           characterList={characterList} refresh={refreshSchedules}/>
                             <div>
@@ -105,7 +104,6 @@ function SchedulePage() {
                             </div>
                         </div>
                     </SchedulePageStyle>
-                </div>
                 <Menu current={"schedule"} performanceID={performanceID!}/>
             </div>
         </div>

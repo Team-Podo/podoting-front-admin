@@ -8,9 +8,9 @@ export const PlaceDetailPageStyle = styled.div`{
     
     & .place-detail {
       margin: 1rem;
-      -webkit-flex: 0 0 30%;
       display: -webkit-flex;
-      justify-content: space-between;
+      -webkit-flex: 0 0 30%;
+      -webkit-justify-content: space-between;
       cursor: pointer;
       
       & .place-image {

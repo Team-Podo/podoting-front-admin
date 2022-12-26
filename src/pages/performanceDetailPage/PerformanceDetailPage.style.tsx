@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
 export const DetailWrapper = styled.div`
-  
+
   .info-left {
     display: -webkit-flex;
     -webkit-flex-direction: row;
-    -webkit-align-items: center;
-    -webkit-flex: 1;
   }
-  
+
   .poster-container {
-    width: 280px;
-    height: 400px;
+    margin-top: 5rem;
+    width: 230px;
   }
 
   .poster-container img {
@@ -19,8 +17,7 @@ export const DetailWrapper = styled.div`
   }
 
   .info-left-detail-box {
-    padding-left: 20px;
-    padding-top: 20px;
+    padding: 2rem;
     display: inline-block;
     vertical-align: top;
   }
@@ -35,8 +32,8 @@ export const DetailWrapper = styled.div`
   .wrapper {
     position: relative;
     display: -webkit-flex;
-    justify-content: space-between;
-    flex-direction: row;
+    -webkit-justify-content: space-between;
+    -webkit-flex-direction: row;
   }
 
   .content {
@@ -49,22 +46,22 @@ export const DetailWrapper = styled.div`
     width: 100%;
   }
 
-  .content-inner>h3 {
+  .content-inner > h3 {
     margin-bottom: 1rem;
   }
 
-  .content-inner>img {
+  .content-inner > img {
     width: 100%;
   }
 
   .detail-tab {
     background-color: #f7e8fc;
     width: 10rem;
-    
+
     li {
       padding: 1rem;
     }
-    
+
     li.active {
       background-color: #764abc;
       color: #fff;
@@ -73,6 +70,7 @@ export const DetailWrapper = styled.div`
   }
 
   .add-cast-form > div {
+    margin-bottom: 1rem;
     display: -webkit-flex;
     -webkit-flex-direction: row;
     -webkit-align-items: center;
@@ -100,7 +98,7 @@ export const DetailWrapper = styled.div`
     width: 80px;
     content: "+";
   }
-  
+
   .add-cast-btn:hover {
     transition: 0.3s;
     background-color: #e5e5e5;
@@ -108,15 +106,23 @@ export const DetailWrapper = styled.div`
     box-shadow: none;
   }
 
+  input[name="cast-profile"] {
+    width: 180px;
+  }
+  
   .cast-profile {
     width: 50px;
     height: 50px;
     overflow: hidden;
     border-radius: 50px;
-    
+
     & > img {
       width: 100%;
     }
+  }
+
+  select[name="character"], select[name="actor"], input[name="cast-profile"] {
+    margin: 0 1rem;
   }
 
 `

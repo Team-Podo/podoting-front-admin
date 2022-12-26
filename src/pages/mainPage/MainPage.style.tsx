@@ -16,23 +16,6 @@ export const MainPageStyle = styled.div`{
     padding: 20px;
   }
   
-  .input-wrapper {
-    margin-bottom: 1rem;
-    
-    & label {
-      display: block;
-    }
-    
-    & input {
-      width: 100%;
-      height: 2rem;
-      padding-left: 10px;
-      border-radius: 5px;
-      border: 1px solid lightgray;
-    }
-    
-  }
-  
   .button {
     float: right;
     cursor: pointer;

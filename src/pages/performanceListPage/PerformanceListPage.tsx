@@ -19,7 +19,7 @@ function PerformanceListPage() {
 
     return <>
         <div className={"common-section"}>
-            <table>
+            <table className={"margin-bottom-2"}>
                 <thead>
                 <tr>
                     <th>id</th>

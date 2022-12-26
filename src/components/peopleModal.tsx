@@ -45,7 +45,7 @@ function PeopleModal({id}: { id: string }) {
     return <>
         <div className={"modal-container"}>
             <form className={"modal flex-row"} onSubmit={onSubmit}>
-                <div className={"profile-preview"}>
+                <div className={"margin-bottom-2"}>
                     <img alt={"profile"} src={profileUrl}/>
                 </div>
                 <div>

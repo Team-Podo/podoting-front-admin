@@ -89,7 +89,7 @@ function PerformanceSeatPage() {
 
     return <DetailWrapper>
         {loaded &&
-        <div className="info common-section">
+        <div className="common-section">
             <div className="wrapper">
                 <div className="info-left">
                     <SeatPageStyle>
@@ -98,9 +98,10 @@ function PerformanceSeatPage() {
                             {activeSeat?.uuid !== "" &&
                             <form className={"seat-map-canvas"}>
                                 <div>
-                                    <p>선택된 좌석: {activeSeat?.uuid}</p>
+                                    <div>선택된 좌석: {activeSeat?.uuid}</div>
                                 </div>
-                                <div>
+                                <div className={"input-wrapper"}>
+                                    <p>등급: </p>
                                     {grades && grades.map((g) => <div key={g.id}>
                                         <label htmlFor={"grade"}>{g.name}</label>
                                         <input type={"checkbox"} name={"grade"} value={g.id}
@@ -109,14 +110,14 @@ function PerformanceSeatPage() {
                                 </div>
                             </form>
                             }
-                            <button className="submit-seat" onClick={onClickSubmitBoard}>저장</button>
+                            <button className="submit-seat button" onClick={onClickSubmitBoard}>저장</button>
                             {seats && seats.map((s) =>
                                 <SeatItem key={s.uuid} uuid={s.uuid} grade={s.grade} point={s.point}
                                           onClick={setActiveSeatHandler}
                                           active={activeSeat?.uuid === s.uuid}></SeatItem>)}
                         </div>
                         <form className={"grade-form"} onSubmit={onSubmit}>
-                            <p>가격 등급 생성하기</p>
+                            <p>* 가격 등급 생성하기</p>
                             <div className={"input-wrapper"}>
                                 <label>등급 이름: </label>
                                 <input type={"text"} {...register("name")} placeholder={"VIP"} required={true}/>
@@ -129,7 +130,7 @@ function PerformanceSeatPage() {
                                 <label>등급 색상: </label>
                                 <input type={"text"} {...register("color")} placeholder={"#e5e5e5"} required={true}/>
                             </div>
-                            <button type={"submit"}>생성</button>
+                            <button type={"submit"} className={"button"}>생성</button>
                         </form>
                     </SeatPageStyle>
                 </div>

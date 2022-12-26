@@ -47,6 +47,7 @@ function CastPage() {
         setLoaded(true)
     }, [performanceID])
 
+    console.log(characters)
     function refreshCharacters() {
         if (performanceID) {
             getCharacters({performanceID}).then((res) =>
@@ -164,24 +165,25 @@ function CastPage() {
                 <div className="info-left">
                     <div>
                         <h2>뮤지컬 팬레터</h2>
-                        <div>배역을 추가해 주세요</div>
+                        <p>* 배역을 추가해 주세요</p>
                         <ul>
-                            {characters && characters.map((c) =>
-                                <li key={c.id}>{c.name}<span className={"remove-li"}
-                                                             onClick={() => onClickDeleteCharacter(c.id)}>삭제</span>
+                            {characters && characters.map((c, index) =>
+                                <li key={c.id}>배역 {index+1}: {c.name}<div className={"btn-tiny"}
+                                                             onClick={() => onClickDeleteCharacter(c.id)}>삭제</div>
                                 </li>)}
                         </ul>
-                        <input type={"text"} value={newRole} onChange={(e) => setNewRole(e.currentTarget.value)}/>
-                        <button onClick={addRole}>추가</button>
-                        <div>캐스트를 추가해 주세요</div>
-                        <div className={"add-cast-btn"} onClick={handleOnClickAddCastBtn}></div>
-                        <form className={"add-cast-form"} onSubmit={onSubmit}>
+                        <label htmlFor={newRole}>배역 추가: </label>
+                        <input name={"newRole"} type={"text"} value={newRole} onChange={(e) => setNewRole(e.currentTarget.value)}/>
+                        <button onClick={addRole} className={"btn-tiny"}>추가</button>
+                        <div className={"margin-bottom-2"}></div>
+                        <p>* 캐스트를 추가해 주세요</p>
+                        <form className={"add-cast-form margin-bottom-2"} onSubmit={onSubmit}>
                             {(casts && casts.length > 0) && casts.map((cast) =>
                                 <div key={cast.idx} data-idx={cast.idx}>
                                     <div className={"cast-profile"}>
                                         <img src={cast.profileImage}/>
                                     </div>
-                                    <input type={"file"} onChange={previewImg}/>
+                                    <input type={"file"} name={"cast-profile"} onChange={previewImg}/>
                                     <label htmlFor={"character"}>배역</label>
                                     <select name={"character"} defaultValue={cast.characterID}
                                             onChange={formCharacterChange}>
@@ -201,6 +203,7 @@ function CastPage() {
                                 </div>
                             )}
                         </form>
+                        <button onClick={handleOnClickAddCastBtn} className={"button"}>캐스트 추가</button>
                         <button type={"submit"} onClick={onSubmit} className={"button"}>저장</button>
                     </div>
                 </div>

@@ -11,11 +11,9 @@ function PerformanceContentPage() {
 
     return <>
         <DetailWrapper>
-            <div className="info common-section">
+            <div className="common-section">
                 <div className="wrapper">
-                    <div className="info-left">
                         <WysiwygEditor performanceID={performanceID!}/>
-                    </div>
                     <Menu current={"content"} performanceID={performanceID!}/>
                 </div>
             </div>

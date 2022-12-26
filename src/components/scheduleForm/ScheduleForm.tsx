@@ -23,7 +23,7 @@ function ScheduleForm({performanceID, activeDate, schedule, castList, characterL
 
     useEffect(() => {
         setDate(moment(activeDate).format("YYYY-MM-DD"))
-        if(schedule?.casts) setSelectedCastList(schedule.casts)
+        if (schedule?.casts) setSelectedCastList(schedule.casts)
         reset({date: date})
     }, [activeDate])
 
@@ -44,10 +44,10 @@ function ScheduleForm({performanceID, activeDate, schedule, castList, characterL
     const onSubmit = handleSubmit(async data => {
         data.casts = selectedCastList
         data.date = date
-        if(schedule) {
+        if (schedule) {
             const UUID = schedule.uuid!
             editSchedule({UUID, data}).then((res) => {
-                if(res.status === 200) {
+                if (res.status === 200) {
                     setAlarm("스케줄이 수정되었습니다")
                     refresh()
                 }
@@ -66,7 +66,7 @@ function ScheduleForm({performanceID, activeDate, schedule, castList, characterL
         e.preventDefault()
         const UUID = e.currentTarget.value
         deleteSchedule({UUID}).then((res) => {
-            if(res.status === 200) {
+            if (res.status === 200) {
                 setAlarm("스케줄이 삭제되었습니다")
                 refresh()
             }
@@ -74,18 +74,21 @@ function ScheduleForm({performanceID, activeDate, schedule, castList, characterL
     }
 
     return <form className={"schedule-edit"} onSubmit={onSubmit}>
-        <p>{schedule ? "스케줄 수정" : "새로운 스케줄 생성"}</p>
+        <p>{schedule ? "* 스케줄 수정" : "* 새로운 스케줄 생성"}</p>
         <div className={"input-wrapper"}>
             <label>상태: </label>
             <span>활성화</span>
             <input type={"checkbox"} {...register("open")} checked={schedule?.open}/>
         </div>
-        <div>날짜: {date}</div>
+        <div className={"input-wrapper"}>
+            <label>날짜: </label>
+            <input type={"text"} disabled={true} value={date}/>
+        </div>
         <div className={"input-wrapper"}>
             <label>시간: </label>
             <input type={"time"} {...register("time")} defaultValue={schedule?.time}/>
         </div>
-        <div>캐스팅</div>
+        <div className={"input-wrapper"}>캐스팅</div>
         {characterList && characterList.map((ch) =>
             <div className={"cast-list"} key={ch}>
                 <div>{ch}</div>
@@ -100,12 +103,15 @@ function ScheduleForm({performanceID, activeDate, schedule, castList, characterL
             </div>
         )}
         {schedule ?
-            <>
-                <button className={"button"} value={schedule.uuid} onClick={onClickDeleteSchedule}>삭제</button>
-                <button className={"button"} type={"submit"}>수정</button>
-            </>
+            <div className={"margin-top-2"} style={{textAlign: "right"}}>
+                <button className={"btn-small"} value={schedule.uuid} onClick={onClickDeleteSchedule}>삭제</button>
+                <button className={"btn-small"} type={"submit"}>수정</button>
+            </div>
             :
-            <button className={"button"} type={"submit"}>생성</button>
+
+            <div className={"margin-top-2"} style={{textAlign: "right"}}>
+                <button className={"btn-small"} type={"submit"}>생성</button>
+            </div>
         }
     </form>
 }

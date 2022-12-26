@@ -53,12 +53,12 @@ const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
 
     return (
         <>
-            { mounted && <>
+            { mounted && <div style={{width: "800px"}}>
                 <Editor ref={editorRef}
                         initialValue={content} // 글 수정 시 사용
                         initialEditType='markdown'
                         hideModeSwitch={true}
-                        height='500px'
+                        height='600px'
                         usageStatistics={false}
                         hooks={{
                             addImageBlobHook: async (blob, callback) => {
@@ -80,8 +80,8 @@ const WysiwygEditor = ({performanceID}: { performanceID: string }) => {
                             }
                         }}
                         toolbarItems={toolbarItems}/>
-                <button className={"button"} onClick={onClickSaveContent}>저장</button>
-            </>}
+                <button className={"button margin-top-2"} onClick={onClickSaveContent}>저장</button>
+            </div>}
         </>
     )
 
