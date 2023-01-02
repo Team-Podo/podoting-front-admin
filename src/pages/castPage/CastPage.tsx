@@ -28,30 +28,34 @@ function CastPage() {
     const [people, setPeople] = useState<People[]>([])
     const [casts, setCasts] = useState<CastForm[]>([])
     const [deletedIDs, setDeletedIDs] = useState<number[]>([])
+    const [performance, setPerformance] = useState("")
     const setAlarm = useAlarm()
 
     useEffect(() => {
         refreshCharacters()
         getPeoples().then((res) => setPeople(res))
-        performanceID && getCasts({performanceID}).then((res: CastForm[]) => {
-            if (res) {
-                res.map((r) => {
+        performanceID && getCasts({performanceID}).then((res) => {
+            setPerformance(res.performanceTitle)
+            if (res.casts) {
+                res.casts.map((r:CastForm) => {
                     if (r.id) r["idx"] = r.id
                     return r
                 })
             } else {
-                res = [{idx: 1, characterID: "0", personID: "0", profileImage: ""}]
+                setPerformance("제목을 가져올 수 없습니다.")
+                res.casts = [{idx: 1, characterID: "0", personID: "0", profileImage: ""}]
             }
-            setCasts(res)
+            setCasts(res.casts)
         })
         setLoaded(true)
     }, [performanceID])
 
-    console.log(characters)
     function refreshCharacters() {
         if (performanceID) {
-            getCharacters({performanceID}).then((res) =>
-                setCharacters(res.data))
+            getCharacters({performanceID}).then((res) =>{
+                setCharacters(res.data)
+                console.log(res.data)
+            })
         }
     }
 
@@ -164,7 +168,7 @@ function CastPage() {
             <div className="wrapper">
                 <div className="info-left">
                     <div>
-                        <h2>뮤지컬 팬레터</h2>
+                        <h2>{performance}</h2>
                         <p>* 배역을 추가해 주세요</p>
                         <ul>
                             {characters && characters.map((c, index) =>

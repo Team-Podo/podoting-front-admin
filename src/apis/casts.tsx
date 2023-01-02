@@ -1,9 +1,19 @@
 import axios from "axios";
 import {Cast} from "../models/cast";
 
+
+interface CastForm extends Cast {
+    idx: number
+    profileFile?: File
+}
+
 export async function getCasts({performanceID}: { performanceID: string }) {
     const res = await axios.get(`https://api.podoting.com/admin/performances/${performanceID}/casts/`)
-    return res.data.casts
+
+    return {
+        "performanceTitle": res.data.performance.title,
+        "casts": res.data.casts
+    }
 }
 
 export async function saveCasts({performanceID, casts}: { performanceID: string, casts: Cast[] }) {
